@@ -16,7 +16,23 @@ var health: float = 100.0:
 	set(value):
 		health = clampf(value, 0.0, max_health)
 		health_changed.emit(health, max_health)
+		# PENTING: deteksi mati/bangkit DI SINI (bukan di Hit_Successful), karena
+		# setter ini jalan di SEMUA client. Damage hanya dihitung di client
+		# penembak; korban menerima HP baru lewat sync_var -> setter ini -> baru
+		# bisa tahu dia mati.
+		if health <= 0.0 and not _is_dead:
+			_enter_death()
+		elif health > 0.0 and _is_dead:
+			_exit_death()
 #endregion
+
+var death_timer: Timer
+var death_timer_label: Control  # Label HUD countdown
+var _is_dead: bool = false
+var _death_time_remaining: float = 30.0  # detik sebelum respawn
+var _death_timer_elapsed: float = 0.0  # elapsed time for countdown
+var _original_collision_mask: int = 1  # untuk dipulihkan setelah respawn
+var _death_position: Vector3 = Vector3.ZERO  # posisi saat mati (dipulihkan saat respawn)
 
 var camera_rotation: Vector2 = Vector2(0.0,0.0)
 var mouse_sensitivity = 0.001
@@ -98,6 +114,21 @@ func _ready() -> void:
 	# dibuat, jadi kita reaksikan juga perubahannya.
 	GDSync.connect_gdsync_owner_changed(self, _on_gdsync_owner_changed)
 	_apply_network_role()
+	# Inisialisasi death timer
+	death_timer = $DeathTimer
+	death_timer.timeout.connect(_on_death_timer_timeout)
+	# Buat Label countdown HUD
+	death_timer_label = Label.new()
+	death_timer_label.name = "DeathTimerLabel"
+	death_timer_label.text = "3"
+	death_timer_label.visible = false
+	death_timer_label.add_theme_font_size_override("font_size", 96)
+	death_timer_label.add_theme_color_override("font_color", Color(1, 0.2, 0.2))
+	death_timer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	death_timer_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	get_node("CanvasLayer").add_child(death_timer_label)
+	# Simpan collision mask awal supaya bisa dipulihkan setelah respawn.
+	_original_collision_mask = collision_mask
 
 func _on_gdsync_owner_changed(_owner: int) -> void:
 	_apply_network_role()
@@ -171,10 +202,42 @@ func _apply_network_role() -> void:
 func Hit_Successful(damage, _direction: Vector3 = Vector3.ZERO, _position: Vector3 = Vector3.ZERO) -> void:
 	health -= damage
 	GDSync.sync_var(self, "health")
-	if health <= 0.0:
-		_respawn()
+
+## Menyembunyikan pemain di client ini (dipanggil dari setter "health").
+## Otak memutuskan ini di SEMUA client, jadi pemain mati menghilang di mana-mana.
+func _enter_death() -> void:
+	_is_dead = true
+	weapon_models.visible = false
+	# Bekukan posisi: collision dimatikan, jadi gravitasi TIDAK boleh jalan,
+	# kalau tidak pemain akan jatuh menembus lantai selama mati.
+	_death_position = global_position
+	velocity = Vector3.ZERO
+	set_physics_process(false)
+	collision_mask = 0
+	visible = false
+	# Countdown + timer respawn hanya untuk pemain yang kita kendalikan lokal.
+	if _is_local:
+		death_timer_label.visible = true
+		death_timer_label.text = "3"
+		_death_timer_elapsed = 0.0
+		death_timer.start(_death_time_remaining)
+
+## Menampilkan kembali pemain saat HP sudah di atas 0 (respawn).
+func _exit_death() -> void:
+	_is_dead = false
+	visible = true
+	weapon_models.visible = true
+	collision_mask = _original_collision_mask
+	# Kembalikan ke posisi saat mati dan pastikan fisika hidup lagi.
+	global_position = _death_position
+	velocity = Vector3.ZERO
+	set_physics_process(_is_local)
+	if _is_local:
+		death_timer_label.visible = false
+		_death_timer_elapsed = 0.0
 
 func _respawn() -> void:
+	# Set HP penuh; setter "health" yang akan memanggil _exit_death.
 	health = max_health
 	GDSync.sync_var(self, "health")
 
@@ -319,6 +382,20 @@ func _process(_delta: float) -> void:
 	if subviewport_camera:
 		subviewport_camera.global_transform = main_camera.global_transform
 	_update_weapon_occlusion()
+	# Update countdown HUD "3, 2, 1". HANYA mengubah teks label; jangan pernah
+	# mengubah _is_dead di sini. Timer (_on_death_timer_timeout -> _respawn) yang
+	# bertanggung jawab membangkitkan pemain lewat _exit_death. Kalau _process
+	# ikut men-set _is_dead=false, setter "health" mengira sudah hidup lagi dan
+	# _exit_death tidak pernah jalan (pemain tetap tak terlihat & tak bisa gerak).
+	if _is_dead and death_timer_label.visible:
+		_death_timer_elapsed += _delta
+		var remaining: float = _death_time_remaining - _death_timer_elapsed
+		var count: int = maxi(1, ceili(remaining))
+		death_timer_label.text = str(count)
+		# Center horizontally, near the top of the screen.
+		var canvas_size: Vector2 = get_viewport().get_visible_rect().size
+		death_timer_label.size = Vector2(canvas_size.x, 120)
+		death_timer_label.position = Vector2(0, canvas_size.y * 0.25)
 
 ## Sembunyikan viewmodel kalau ada dinding sangat dekat di depan kamera, supaya
 ## laras senjata tidak terlihat menembus/menonjol dari dinding.
@@ -398,6 +475,9 @@ func _on_sprint_timer_timeout() -> void:
 	get_tree().create_timer(sprint_cooldown_time).timeout.connect(_on_sprint_cooldown_timeout)
 	speed_modifier = NORMAL_speed
 	sprint_time_remaining = 0
+
+func _on_death_timer_timeout() -> void:
+	_respawn()
 
 func _on_sprint_cooldown_timeout():
 	sprint_on_cooldown = false

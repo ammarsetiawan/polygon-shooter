@@ -2416,6 +2416,8 @@ wait_time = 1.251
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=530751673]
 
 [node name="PropertySynchronizer" type="Node" parent="." unique_id=715054497]
+[node name="DeathTimer" type="Timer" parent="." unique_id=1234567890]
+one_shot = true
 script = ExtResource("9_giihu")
 broadcast = 2
 node_path = NodePath("..")

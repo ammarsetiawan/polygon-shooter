@@ -102,6 +102,10 @@ func enter() -> void:
 	animation_player.queue(current_weapon_slot.weapon.pick_up_animation)
 	weapon_changed.emit(current_weapon_slot.weapon.weapon_name)
 	update_ammo.emit([current_weapon_slot.current_ammo, current_weapon_slot.reserve_ammo])
+	# Salinan player LAIN: pastikan senjatanya langsung terlihat (lihat penjelasan di
+	# _remote_show_current_weapon). Di-defer supaya owner node sudah ter-set, jadi
+	# senjata player milik kita sendiri tidak ikut ter-snap dan tetap ada animasi angkat.
+	_remote_show_current_weapon.call_deferred()
 
 func exit(_next_weapon: WeaponSlot) -> void:
 	if _next_weapon != current_weapon_slot:
@@ -302,4 +306,21 @@ func _remote_change_weapon(index: int) -> void:
 		return
 	current_weapon_slot = weapon_stack[index]
 	enter()
+
+## Khusus salinan player LAIN: lompatkan animasi "active" (angkat senjata) langsung
+## ke frame terakhir, sehingga senjata PASTI terlihat dan berada di posisi dipegang.
+## Animasi "active" baru menyalakan `visible` di t=0.2s dan baru memindahkan senjata
+## ke posisi dipegang di t=0.4s; kalau animasi itu terpotong (mis. oleh animasi
+## tembakan yang di-broadcast client lain), senjata lawan jadi tak kelihatan
+## (visible=false, posisi di (0,0,0) = tertanam di kepala).
+func _remote_show_current_weapon() -> void:
+	if GDSync.is_gdsync_owner(owner):
+		return
+	if animation_player == null or current_weapon_slot == null or current_weapon_slot.weapon == null:
+		return
+	var anim_name: StringName = current_weapon_slot.weapon.pick_up_animation
+	if not animation_player.has_animation(anim_name):
+		return
+	animation_player.play(anim_name)
+	animation_player.seek(animation_player.get_animation(anim_name).length - 0.001, true)
 #endregion
