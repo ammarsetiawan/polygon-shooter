@@ -1,0 +1,41 @@
+res://addons/GD-Sync/UI/ConfigMenu/ConfigMenu.tscn::0bd38e24ad24383a2a544f12b6363c7d::1793872536::res://.godot/exported/133200997/export-9b685ffd7258366fa0c7a8b62ecb725e-ConfigMenu.scn
+res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres::f2f8313ad82d576acd073f24653eadf2::1793976243::res://.godot/exported/133200997/export-e8dbeb2f050835dfc1e8dad6811968f7-GD-Theme.res
+res://addons/GD-Sync/UI/Messages/ToastMessage.tscn::ebebb85f054b9488e639b763a5b0f1de::1793872536::res://.godot/exported/133200997/export-5d91280a9cb132cac8dbebf5664e1165-ToastMessage.scn
+res://addons/GD-Sync/UI/Profiler/GDSyncProfiler.tscn::f0485ba3133c1e72023a87d3ca2dfcba::1793872536::res://.godot/exported/133200997/export-9e7f5ab5430e59e7ee709fc23addb260-GDSyncProfiler.scn
+res://addons/orca/scenes/chat_window.tscn::150aee78331adf551bb016672522dd17::1767200400::res://.godot/exported/133200997/export-b1e0af1385a44ece9bedd693dbb71162-chat_window.scn
+res://addons/orca/scenes/orca.tscn::7aeea61b8d2434f9d9330668f9a5b581::1767200400::res://.godot/exported/133200997/export-c3b98ba0bcd13d1d2975f7e6f3c6bb3e-orca.scn
+res://Example World/Objects/World/WorldMesh/Mesh_Lib.tscn::496fba2889d72ce73ea8ffe61d979036::1769909716::res://.godot/exported/133200997/export-0c5e1cd8ba4235ad79f8a67171214ab8-Mesh_Lib.scn
+res://Example World/Objects/World/box_1.tscn::ba2215fe5b58a506ab0d56783921f931::1769909716::res://.godot/exported/133200997/export-df21c41035658ce8d8806bc9d016bf54-box_1.scn
+res://Example World/Objects/World/target.tscn::37eb9e3e91ed6a0afd66e4050ac5ee56::1769909716::res://.godot/exported/133200997/export-1fffac9075831003d7617a199cb299a5-target.scn
+res://Example World/Objects/World/world.tres::b5deb30cd921cce329c319af5910115d::1793976243::res://.godot/exported/133200997/export-d66cfbfca37a5448ce96b5bbfa7b01f0-world.res
+res://Example World/Objects/World/world.tscn::117d055af67d1a52bfacba76bd6e2e91::1793886990::res://.godot/exported/133200997/export-873d01a0e513a7df05949f5cb885e52f-world.scn
+res://Example World/Objects/World/world_environment.tres::10d2502cac886e0e25d020b829115331::1769909716::res://.godot/exported/133200997/export-5976f90f051ad62744cadaeced93ce4a-world_environment.res
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres::aefc9ec74dbf698900d67d05a00db056::1769909716::res://.godot/exported/133200997/export-97eb0215010d1b1bfd147a2ee25cfed1-blasterI.res
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres::8a2596bcdd10f09c852344162fe07608::1769909716::res://.godot/exported/133200997/export-98dbb048e4565631fa6d7c0a5089cc5e-blasterL.res
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterM.tres::8c765f9fce3ba7904cbe060a483689cd::1769909716::res://.godot/exported/133200997/export-c30168cad8954f8149fb44d7dc19e10b-blasterM.res
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres::ad5994744ef6bb06aa7869cc541bdcbb::1769909716::res://.godot/exported/133200997/export-d05f4b06e8135fce586572e11ad9d8af-blasterN.res
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterQ.tres::ba38038f491ed31679af4c5abda65197::1769909716::res://.godot/exported/133200997/export-4a8cb5c3023a1a930f2d4233bc3099e0-blasterQ.res
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/MeleeWeapon.tres::b832559d6386f5d246d0976f602b9515::1769909716::res://.godot/exported/133200997/export-6f983f03645f16e3739201532c731d74-MeleeWeapon.res
+res://Player_Controller/Spawnable_Objects/Clips/blaster_i_clip.tscn::6a8cd2f4470f53970f74d070dc6284b4::1769909716::res://.godot/exported/133200997/export-123d757f91904a205825afb388a8ce39-blaster_i_clip.scn
+res://Player_Controller/Spawnable_Objects/Clips/blaster_L_clip.tscn::40f1b19f4b708ad7e609394b8e5c2540::1769909716::res://.godot/exported/133200997/export-417d04da977edbf95cecc21b4d55580f-blaster_L_clip.scn
+res://Player_Controller/Spawnable_Objects/Clips/blaster_m_clip.tscn::0e454669c50c241027aacd2dd81aaef2::1769909716::res://.godot/exported/133200997/export-fb9dc32c2db845dfe2cb04a2b3a0fba7-blaster_m_clip.scn
+res://Player_Controller/Spawnable_Objects/Clips/blaster_n_clip.tscn::37c3048b530bc07cd2bf04609f047237::1769909716::res://.godot/exported/133200997/export-27e7ac09543c16eb0031867cb621e30b-blaster_n_clip.scn
+res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/basic_hitscan_projectile.tscn::1fb1e661cca95f780c140a5a1890fc02::1769909716::res://.godot/exported/133200997/export-e573cb25c6f05f598638ebf3c18578ff-basic_hitscan_projectile.scn
+res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/basic_rigid_body_projectile.tscn::8e3547881bec5d66e6fd26529298d65d::1769909716::res://.godot/exported/133200997/export-35aab691fa3cd3ffc03eaf832d9790f8-basic_rigid_body_projectile.scn
+res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/melee_projectile.tscn::8f3dcef2c25a1d87484363ce09005ac0::1793890412::res://.godot/exported/133200997/export-b11e746a55654d58b441998863e66caf-melee_projectile.scn
+res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/rocket_launcher_projectile.tscn::8d586d546db15c29bc111b0bb6227b3d::1793890412::res://.godot/exported/133200997/export-e0870cae1ebeb34eefe8e496829e6668-rocket_launcher_projectile.scn
+res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/shotgun_projectile.tscn::eae2b3d7cb30b1794cecec293f3d01b8::1769909716::res://.godot/exported/133200997/export-6697ccc2899381497a224efc686ab176-shotgun_projectile.scn
+res://Player_Controller/Spawnable_Objects/SprayProfiles/spray_profile_1.tscn::5812c3a15ebec1ba5a201ff438f7db39::1769909716::res://.godot/exported/133200997/export-ae0561a78c6b822122a4737dfbe1e761-spray_profile_1.scn
+res://Player_Controller/Spawnable_Objects/SprayProfiles/spray_profile_2.tscn::b73cd4bf0904bf05aa5fe226d456118f::1769909716::res://.godot/exported/133200997/export-6f0666b89dda30901455b44cb015d77f-spray_profile_2.scn
+res://Player_Controller/Spawnable_Objects/SprayProfiles/spray_profile_3.tscn::2c7ca25718f64a6a65c66170167ebbd1::1769909716::res://.godot/exported/133200997/export-22a90a85d0f2f77b339559d3a10b6c3d-spray_profile_3.scn
+res://Player_Controller/Spawnable_Objects/Weapons/blasterQ.tscn::1da41f267b6cea5102595c09d2cdae61::1769909716::res://.godot/exported/133200997/export-8f611e63c0f699e36675449c562cc917-blasterQ.scn
+res://Player_Controller/Spawnable_Objects/Weapons/blaster_I.tscn::30aeda12e0c7136092e8320b3bbac4ca::1769909716::res://.godot/exported/133200997/export-d294fbf40ff62da617aa48e108e4080e-blaster_I.scn
+res://Player_Controller/Spawnable_Objects/Weapons/blaster_L.tscn::87af2753642027e6b52ea39ccd3ad6e3::1769909716::res://.godot/exported/133200997/export-6b8237c21a38b014fbb57bca1b8242b3-blaster_L.scn
+res://Player_Controller/Spawnable_Objects/Weapons/blaster_m.tscn::16b9511323de8831787fe71da9707b04::1769909716::res://.godot/exported/133200997/export-b2c21253f3a45d152fb113fa9a69be07-blaster_m.scn
+res://Player_Controller/Spawnable_Objects/Weapons/blaster_n.tscn::6900b8abfd38125ec42c24f18352efd1::1769909716::res://.godot/exported/133200997/export-ac7e7cd3165f706f036f949921c60af9-blaster_n.scn
+res://Player_Controller/Spawnable_Objects/bullet.tscn::4d9c21b2ce515155698663ce0373a739::1793890410::res://.godot/exported/133200997/export-8cbc94b3c803f02db4e3433438e7297f-bullet.scn
+res://Player_Controller/Spawnable_Objects/hit_debug.tscn::258d295eb1a5f34939154e7ccdd413c9::1769909716::res://.godot/exported/133200997/export-d9df23e033b6128f4b76bbd4dbd06932-hit_debug.scn
+res://Player_Controller/Spawnable_Objects/hit_debug_2.tscn::65e1a3e883082b11ee21d57718b9c41d::1769909716::res://.godot/exported/133200997/export-5aece4301f263fa6d279b04f79cf403b-hit_debug_2.scn
+res://Player_Controller/Spawnable_Objects/rocket.tscn::8f123b0798ca6aa42c3bbbee7fd05e9a::1769909716::res://.godot/exported/133200997/export-7651130145f6ee904f4d5bdd7d768ede-rocket.scn
+res://Player_Controller/player_character.tscn::bc187997636503dd86e493b28cea0515::1793976243::res://.godot/exported/133200997/export-c99ee1587b60a9d5670034c092a51cbd-player_character.scn
+res://Player_Controller/world_environment.tres::af0243492da9e60b34afba32109f25f1::1769909716::res://.godot/exported/133200997/export-118845af004d4ea5432e3ef7d3f471c2-world_environment.res

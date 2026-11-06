@@ -1,6 +1,5 @@
-res://Example World/Objects/World/world.gd
-res://Player_Controller/scripts/Player_Character/HUD.gd
 res://Player_Controller/scripts/Player_Character/player_character.gd
-res://__test_death.tscn
-res://__test_death.gd
+res://Example World/Objects/World/world.tscn
+res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres
+res://Example World/Objects/World/world.tres
 res://Player_Controller/player_character.tscn

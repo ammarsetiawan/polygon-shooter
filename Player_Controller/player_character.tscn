@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://oc13h3au02ro"]
 
-[ext_resource type="Script" uid="uid://cfdt8t4r8pxel" path="res://Player_Controller/scripts/Player_Character/player_character.gd" id="1_h0t42"]
+[ext_resource type="Script" uid="uid://dl3toa0s64amm" path="res://Player_Controller/scripts/Player_Character/player_character.gd" id="1_h0t42"]
 [ext_resource type="Script" uid="uid://cc3t6vk7qpwey" path="res://Player_Controller/scripts/Player_Character/HUD.gd" id="2_tvwwj"]
 [ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://Player_Controller/HUD ASSETS/crosshair001.png" id="3_7f0mw"]
 [ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://Player_Controller/HUD ASSETS/crosshair046.png" id="4_l32wb"]
@@ -2153,6 +2153,8 @@ crouch_collision = NodePath("CrouchCollider")
 right_lean_collision = NodePath("Camera/LeanLeftCollision")
 left_lean_collision = NodePath("Camera/LeanRighCollision")
 sprint_timer = NodePath("SprintTimer")
+sprint_cooldown_time = 0.2
+sprint_replenish_rate = 1.0
 acceleration = 20.0
 coyote_timer = NodePath("CoyoteTimer")
 metadata/_edit_group_ = true
@@ -2411,11 +2413,13 @@ shape = SubResource("SphereShape3D_cx3sy")
 target_position = Vector3(0, 0.4, 0)
 
 [node name="SprintTimer" type="Timer" parent="." unique_id=962046205]
-wait_time = 1.251
+wait_time = 4096.0
+one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=530751673]
 
 [node name="PropertySynchronizer" type="Node" parent="." unique_id=715054497]
+
 [node name="DeathTimer" type="Timer" parent="." unique_id=1234567890]
 one_shot = true
 script = ExtResource("9_giihu")
@@ -2424,7 +2428,6 @@ node_path = NodePath("..")
 properties = PackedStringArray("global_position", "rotation")
 interpolated = true
 interpolation_speed = 20.0
-extrapolation = null
 extrapolated = false
 max_extrapolation_time = 0.2
 metadata/_custom_type_script = "uid://fcoih1ax5dcs"

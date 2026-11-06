@@ -1,0 +1,132 @@
+extends CharacterBody3D
+
+@onready var camera: Node3D = %Camera
+@onready var weapon_models: Node3D = $Camera/LeanPivot/MainCamera/Weapons_Manager/Weapons_Models
+
+@export var subviewport_camera: Camera3D
+@export var main_camera:Camera3D
+@export var animation_tree: AnimationTree
+
+@export var enable_sprint: bool = true
+
+@export var aim_fov: float = 40.0
+@export var default_fov: float = 75.0
+
+@export var enable_crouch: bool = true
+@export var crouch_toggle: bool = false
+@export var crouch_collision: ShapeCast3D
+@export var enable_lean: bool = true
+@export var right_lean_collision: ShapeCast3D
+@export var left_lean_collision: ShapeCast3D
+
+var speed_modifier: float = 1
+
+const NORMAL_speed = 1
+@export_range(1.0,3.0) var sprint_speed: float = 2.0
+@export_range(0.1,1.0) var walk_speed: float = 0.5
+
+var _is_local: bool = true
+var _weapon_viewmodel_hidden: bool = false
+const WEAPON_VIEWMODEL_RAY := 0.9
+const WEAPON_VISUAL_LAYER := 524288
+const WORLD_VISUAL_LAYER := 1
+
+func _ready() -> void:
+	pass
+
+func _process(_delta: float) -> void:
+	if subviewport_camera:
+		subviewport_camera.global_transform = main_camera.global_transform
+	_update_weapon_occlusion()
+
+func _physics_process(_delta: float) -> void:
+	sprint_replenish(_delta)
+	lean_collision()
+	
+	if crouched and crouch_blocked:
+		if !crouch_collision.is_colliding():
+			crouch_blocked = false
+			if !Input.is_action_pressed("crouch") and !crouch_toggle:
+				crouch()
+				
+	# Add the gravity.
+	var _acceleration
+	if not is_on_floor():
+		_acceleration = acceleration*air_acceleration_modifier
+		
+		if coyote_timer.is_stopped():
+			coyote_timer.start(coyote_time)
+	
+		if velocity.y>0:
+			velocity.y -= jump_gravity * _delta
+		else:
+			velocity.y -= fall_gravity * _delta
+	else:
+		_acceleration = acceleration
+		jump_available = true
+		coyote_timer.stop()
+		_speed = (base_speed / max((float(crouched)*crouch_speed_reduction),1)) * speed_modifier
+		if jump_buffer:
+			jump()
+			jump_buffer = false
+	# Handle Jump.
+	if Input.is_action_just_pressed("ui_accept"):
+		if jump_available:
+			if crouched:
+				crouch()
+			else:
+				lean(CENTRE)
+				jump()
+		else:
+			jump_buffer = true
+			get_tree().create_timer(jump_buffer_time).timeout.connect(on_jump_buffer_timeout)
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	velocity.x = move_toward(velocity.x, direction.x * _speed, _acceleration*_delta)
+	velocity.z = move_toward(velocity.z, direction.z * _speed, _acceleration*_delta)
+	
+	move_and_slide()
+
+func sprint_replenish(delta) -> void:
+	var sprint_bar_Value
+
+	if !sprint_on_cooldown and (speed_modifier != sprint_speed):
+		
+		if is_on_floor():
+			sprint_time_remaining = move_toward(sprint_time_remaining, sprint_time, delta*sprint_replenish_rate)
+			
+		sprint_bar_Value= (sprint_time_remaining/sprint_time)*100
+		
+	else:
+		sprint_bar_Value = (sprint_timer.time_left/sprint_time)*100
+	
+	sprint_bar.value = sprint_bar_Value
+	
+	if sprint_bar_Value == 100:
+		sprint_bar.hide()
+
+func jump()->void:
+	velocity.y = jump_velocity
+	jump_available = false
+
+func _on_sprint_timer_timeout() -> void:
+	sprint_on_cooldown = true
+	get_tree().create_timer(sprint_cooldown_time).timeout.connect(_on_sprint_cooldown_timeout)
+	speed_modifier = NORMAL_speed
+	sprint_time_remaining = 0
+
+func _on_sprint_cooldown_timeout():
+	sprint_on_cooldown = false
+
+func _on_coyote_timer_timeout() -> void:
+	jump_available = false
+
+func on_jump_buffer_timeout()->void:
+	jump_buffer = false
+
+func update_fov(target_fov: float) -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(main_camera, "fov", target_fov, 0.2)

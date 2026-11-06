@@ -1,5 +1,5 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1793972881
+::res://::1793976283
 export_presets.cfg::TextFile::-1::1793968845::0::1::::<><><>0<>0<><>::
 read me.txt::TextFile::-1::1769909716::0::1::::<><><>0<>0<><>::
 Title.png::CompressedTexture2D::8768245707470150615::1769909716::1793869259::1::::<><><>0<>0<>5777c7827127c851d8a3ad8649eccb18<>res://.godot/imported/Title.png-0fdbe37ca3e9f7d480ff038fa3ba23ab.ctex::
@@ -27,27 +27,27 @@ Steam.gd::GDScript::8516329115025171692::1793872510::0::1::::<>Node<><>0<>0<><>:
 ::res://addons/GD-Sync/Scripts/Enums/::1793872510
 Enums.gd::GDScript::6273596531716226925::1793872510::0::1::::ENUMS<>RefCounted<><>0<>0<><>::
 ::res://addons/GD-Sync/Scripts/Types/::1793872511
-InterestObject.gd::GDScript::4457683392421470898::1793872510::0::1::::InterestObject<>Node<><>0<>1<><>::
-InterestViewer.gd::GDScript::2328556567590047302::1793872510::0::1::::InterestViewer<>Node<><>0<>1<><>::
+InterestObject.gd::GDScript::4457683392421470898::1793872510::0::1::::InterestObject<>Node<>res://addons/GD-Sync/UI/Icons/InterestObject.png<>0<>1<><>::
+InterestViewer.gd::GDScript::2328556567590047302::1793872510::0::1::::InterestViewer<>Node<>res://addons/GD-Sync/UI/Icons/InterestViewer.png<>0<>1<><>::
 MatchmakingRequest.gd::GDScript::2404852327285951329::1793872510::0::1::::MatchmakingRequest<>RefCounted<><>0<>0<><>::
-NodeInstantiator.gd::GDScript::1624260665348557831::1793872510::0::1::::NodeInstantiator<>Node<><>0<>1<><>::
-PropertySynchronizer.gd::GDScript::355937705808535362::1793872510::0::1::::PropertySynchronizer<>Node<><>0<>1<><>::
-SynchronizedAnimatedSprite2D.gd::GDScript::8313894592448966817::1793872510::0::1::::SynchronizedAnimatedSprite2D<>AnimatedSprite2D<><>0<>0<><>::
-SynchronizedAnimationPlayer.gd::GDScript::5767033267404084624::1793872510::0::1::::SynchronizedAnimationPlayer<>AnimationPlayer<><>0<>0<><>::
-SynchronizedAnimationTree.gd::GDScript::3186300579772764634::1793872510::0::1::::SynchronizedAnimationTree<>AnimationTree<><>0<>1<><>::
-SynchronizedAudioStreamPlayer2D.gd::GDScript::3128559311992222684::1793872511::0::1::::SynchronizedAudioStreamPlayer2D<>AudioStreamPlayer2D<><>0<>0<><>::
-SynchronizedAudioStreamPlayer3D.gd::GDScript::5105823993471267124::1793872511::0::1::::SynchronizedAudioStreamPlayer3D<>AudioStreamPlayer3D<><>0<>0<><>::
-SynchronizedAudioStreamPlayer.gd::GDScript::3535501431376497192::1793872511::0::1::::SynchronizedAudioStreamPlayer<>AudioStreamPlayer<><>0<>0<><>::
-SynchronizedGPUParticles2D.gd::GDScript::5546969877683874557::1793872511::0::1::::SynchronizedGPUParticles2D<>GPUParticles2D<><>0<>0<><>::
-SynchronizedGPUParticles3D.gd::GDScript::7690737774571883378::1793872511::0::1::::SynchronizedGPUParticles3D<>GPUParticles3D<><>0<>0<><>::
-SynchronizedRigidBody2D.gd::GDScript::4700627516133530070::1793872511::0::1::::SynchronizedRigidBody2D<>RigidBody2D<><>0<>1<><>::
-SynchronizedRigidBody3D.gd::GDScript::8151555709508088183::1793872511::0::1::::SynchronizedRigidBody3D<>RigidBody3D<><>0<>1<><>::
-VoiceChat.gd::GDScript::4549976844509028850::1793872511::0::1::::VoiceChat<>Node<><>0<>1<><>::
+NodeInstantiator.gd::GDScript::1624260665348557831::1793872510::0::1::::NodeInstantiator<>Node<>res://addons/GD-Sync/UI/Icons/NodeInstantiator.png<>0<>1<><>::
+PropertySynchronizer.gd::GDScript::355937705808535362::1793872510::0::1::::PropertySynchronizer<>Node<>res://addons/GD-Sync/UI/Icons/SynchronizeIcon.png<>0<>1<><>::
+SynchronizedAnimatedSprite2D.gd::GDScript::8313894592448966817::1793872510::0::1::::SynchronizedAnimatedSprite2D<>AnimatedSprite2D<>res://addons/GD-Sync/UI/Icons/SynchronizedAnimatedSprite.png<>0<>0<><>::
+SynchronizedAnimationPlayer.gd::GDScript::5767033267404084624::1793872510::0::1::::SynchronizedAnimationPlayer<>AnimationPlayer<>res://addons/GD-Sync/UI/Icons/SynchronizedAnimationPlayer.png<>0<>0<><>::
+SynchronizedAnimationTree.gd::GDScript::3186300579772764634::1793872510::0::1::::SynchronizedAnimationTree<>AnimationTree<>res://addons/GD-Sync/UI/Icons/SynchronizedAnimationTree.png<>0<>1<><>::
+SynchronizedAudioStreamPlayer2D.gd::GDScript::3128559311992222684::1793872511::0::1::::SynchronizedAudioStreamPlayer2D<>AudioStreamPlayer2D<>res://addons/GD-Sync/UI/Icons/SynchronizedAudioStreamPlayer.png<>0<>0<><>::
+SynchronizedAudioStreamPlayer3D.gd::GDScript::5105823993471267124::1793872511::0::1::::SynchronizedAudioStreamPlayer3D<>AudioStreamPlayer3D<>res://addons/GD-Sync/UI/Icons/SynchronizedAudioStreamPlayer.png<>0<>0<><>::
+SynchronizedAudioStreamPlayer.gd::GDScript::3535501431376497192::1793872511::0::1::::SynchronizedAudioStreamPlayer<>AudioStreamPlayer<>res://addons/GD-Sync/UI/Icons/SynchronizedAudioStreamPlayer.png<>0<>0<><>::
+SynchronizedGPUParticles2D.gd::GDScript::5546969877683874557::1793872511::0::1::::SynchronizedGPUParticles2D<>GPUParticles2D<>res://addons/GD-Sync/UI/Icons/SynchronizedGPUParticles.png<>0<>0<><>::
+SynchronizedGPUParticles3D.gd::GDScript::7690737774571883378::1793872511::0::1::::SynchronizedGPUParticles3D<>GPUParticles3D<>res://addons/GD-Sync/UI/Icons/SynchronizedGPUParticles.png<>0<>0<><>::
+SynchronizedRigidBody2D.gd::GDScript::4700627516133530070::1793872511::0::1::::SynchronizedRigidBody2D<>RigidBody2D<>res://addons/GD-Sync/UI/Icons/SynchronizedRigidBody3D.png<>0<>1<><>::
+SynchronizedRigidBody3D.gd::GDScript::8151555709508088183::1793872511::0::1::::SynchronizedRigidBody3D<>RigidBody3D<>res://addons/GD-Sync/UI/Icons/SynchronizedRigidBody3D.png<>0<>1<><>::
+VoiceChat.gd::GDScript::4549976844509028850::1793872511::0::1::::VoiceChat<>Node<>res://addons/GD-Sync/UI/Icons/VoiceChatIcon.png<>0<>1<><>::
 ::res://addons/GD-Sync/UI/::1793872511
-::res://addons/GD-Sync/UI/ConfigMenu/::1793888227
+::res://addons/GD-Sync/UI/ConfigMenu/::1793976243
 ConfigMenu.gd::GDScript::6109270242027716325::1793872511::0::1::::<>Control<><>0<>1<><>::
 ConfigMenu.tscn::PackedScene::1840268891081674728::1793872536::0::1::::<><><>0<>0<><>::uid://ctbm12j05lk6h::::res://addons/GD-Sync/UI/ConfigMenu/ConfigMenu.gd<>uid://5whm1igkt23h::::res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres<>uid://d2pl6xyfyub5k::::res://addons/GD-Sync/UI/ConfigMenu/GDSLogo.png<>uid://o7408i2pu2eb::::res://addons/GD-Sync/UI/Icons/LoadIcon.png
-GD-Theme.tres::Theme::2151529446458804515::1793888227::0::1::::<><><>0<>0<><>::uid://bnjmhin4fqi2u::::res://addons/GD-Sync/UI/Fonts/Outfit-Regular.ttf
+GD-Theme.tres::Theme::2151529446458804515::1793976243::0::1::::<><><>0<>0<><>::uid://bnjmhin4fqi2u::::res://addons/GD-Sync/UI/Fonts/Outfit-Regular.ttf
 GDSLogo.png::CompressedTexture2D::9086050987520953802::1793872511::1793872537::1::::<><><>0<>0<>382aba5df96eb5dd1873e84ef33969f5<>res://.godot/imported/GDSLogo.png-f71dad2ce9e497aa8e805547e20fd4d7.ctex::
 ::res://addons/GD-Sync/UI/Fonts/::1793872537
 Outfit-Regular.ttf::FontFile::3318196596838798458::1793872511::1793872537::1::::<><><>0<>0<>5c907ebe29737c3f006e04ac9e90fe7f<>res://.godot/imported/Outfit-Regular.ttf-b3e20891c08db9fe7cabafc627c030a5.fontdata::
@@ -194,7 +194,7 @@ ziva_agent.gdextension::GDExtension::4529844308398739034::1793789729::0::1::::<>
 ::res://addons/ziva_agent/bin/linux_x86_64/::1793885398
 ::res://addons/ziva_agent/bin/macos/::1793885398
 ::res://addons/ziva_agent/bin/windows_arm64/::1793885398
-::res://addons/ziva_agent/bin/windows_x86_64/::1793968599
+::res://addons/ziva_agent/bin/windows_x86_64/::1793976276
 ::res://Example World/::1769909715
 ::res://Example World/Models/::1769909715
 ::res://Example World/Models/Boxes/::1793869287
@@ -433,12 +433,12 @@ texture_11.png::CompressedTexture2D::1353891507144140720::1769909716::1793869258
 texture_12.png::CompressedTexture2D::9042040225043261128::1769909716::1793869258::1::::<><><>0<>0<>ca6c0b5c08c2e0f2c58aca0fb3d66df2<>res://.godot/imported/texture_12.png-5a7c68a5b2aebef577f49d7964ba26bb.ctex::
 texture_13.png::CompressedTexture2D::2746034453418042728::1769909716::1793869258::1::::<><><>0<>0<>5e921e7141b5ac6a85ab17abe7071ad3<>res://.godot/imported/texture_13.png-b8b6930ab59bf4d1b62f6421b63ff8d5.ctex::
 ::res://Example World/Objects/::1769909715
-::res://Example World/Objects/World/::1793971175
+::res://Example World/Objects/World/::1793976243
 box_1.tscn::PackedScene::3936402651945174464::1769909716::0::1::::<><><>0<>0<><>::uid://cb5kuitlabcb::::res://Example World/Scripts/physic_objects/targetable_objects.gd<>uid://dxsynf14s3j6x::::res://Example World/Models/Boxes/cardboard_box1_Box_21-256x256.png
 target.tscn::PackedScene::3434350818672775921::1769909716::0::1::::<><><>0<>0<><>::uid://4sn7rph3kvg5::::res://Example World/Scripts/target.gd
 world.gd::GDScript::4315404859407669813::1793971175::0::1::::<>Node3D<><>0<>0<><>::
 world.gdshader::Shader::3815167405481143025::1769909716::0::1::::<><><>0<>0<><>::
-world.tres::VisualShader::713455263035096232::1793888227::0::1::::<><><>0<>0<><>::uid://clnfpevxcym48::::res://Example World/Models/Textures/prototype texture/Green/texture_01.png<>uid://ir78fctnwldw::::res://Example World/Models/Textures/prototype texture/Red/texture_01.png
+world.tres::VisualShader::713455263035096232::1793976243::0::1::::<><><>0<>0<><>::uid://clnfpevxcym48::::res://Example World/Models/Textures/prototype texture/Green/texture_01.png<>uid://ir78fctnwldw::::res://Example World/Models/Textures/prototype texture/Red/texture_01.png
 world.tscn::PackedScene::8089720147576460957::1793886990::0::1::::<><><>0<>0<><>::uid://bwc28g513sfim::::res://Example World/Objects/World/box_1.tscn<>uid://bo6viygofawpl::::res://Example World/Objects/World/target.tscn<>uid://gtthejj2wmyj::::res://Player_Controller/Spawnable_Objects/Weapons/blaster_n.tscn<>uid://cvbk5bxenpxey::::res://Player_Controller/Spawnable_Objects/Weapons/blaster_I.tscn<>uid://c1jg0ifn7yvve::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres<>uid://bw4j1fbww4k8s::::res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd<>uid://catx2kysw47d8::::res://Player_Controller/Spawnable_Objects/Weapons/blaster_L.tscn<>uid://yc1f2j7pl4vr::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres<>uid://x8nhs2cer2to::::res://Player_Controller/Spawnable_Objects/Weapons/blaster_m.tscn<>uid://bwrs8ensewkgc::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres<>uid://dl236agqx8rjp::::res://Player_Controller/Spawnable_Objects/Clips/blaster_i_clip.tscn<>uid://cjxvrad2c6vh8::::res://Player_Controller/Spawnable_Objects/Clips/blaster_n_clip.tscn<>uid://oc13h3au02ro::::res://Player_Controller/player_character.tscn<>uid://cd8msvjysh2uv::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterM.tres<>uid://cgt2lt4ultlaq::::res://Player_Controller/Spawnable_Objects/Clips/blaster_m_clip.tscn<>uid://br6g3dtbytwpu::::res://Player_Controller/Spawnable_Objects/Clips/blaster_L_clip.tscn<>uid://bkppki07fuifu::::res://Example World/Models/Textures/prototype texture/Dark/texture_01.png<>uid://dwgt7gwe3gfyy::::res://Player_Controller/Spawnable_Objects/Weapons/blasterQ.tscn<>uid://dgayjkjx4mckc::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterQ.tres<>uid://kfuretb65505::::res://Example World/Objects/World/world.tres<>uid://b2qoc8g50i1yn::::res://Example World/Objects/World/world.gd
 world_environment.tres::Environment::3542282129581286666::1769909716::0::1::::<><><>0<>0<><>::
 ::res://Example World/Objects/World/WorldMesh/::1793869267
@@ -448,17 +448,17 @@ Mesh_Lib.tscn::PackedScene::5665647082389934187::1769909716::0::1::::<><><>0<>0<
 target.gd::GDScript::2073482647811837422::1769909716::0::1::::<>StaticBody3D<><>0<>0<><>::
 ::res://Example World/Scripts/physic_objects/::1769909715
 targetable_objects.gd::GDScript::144282496455579609::1769909716::0::1::::<>RigidBody3D<><>0<>0<><>::
-::res://Player_Controller/::1793973144
-player_character.tscn::PackedScene::988401621427553860::1793973148::0::1::::<><><>0<>0<><>::uid://cfdt8t4r8pxel::::res://Player_Controller/scripts/Player_Character/player_character.gd<>uid://cc3t6vk7qpwey::::res://Player_Controller/scripts/Player_Character/HUD.gd<>uid://bjh5ic6qy4jtl::::res://Player_Controller/HUD ASSETS/crosshair001.png<>uid://uidicgaojgdi::::res://Player_Controller/HUD ASSETS/crosshair046.png<>uid://cxxpp8cfxb8jp::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd<>uid://yc1f2j7pl4vr::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres<>uid://bw4j1fbww4k8s::::res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd<>uid://fcoih1ax5dcs::::res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd<>uid://uybino34n0sj::::res://Player_Controller/weapon_animation.res
+::res://Player_Controller/::1793976243
+player_character.tscn::PackedScene::988401621427553860::1793976243::0::1::::<><><>0<>0<><>::uid://cfdt8t4r8pxel::::res://Player_Controller/scripts/Player_Character/player_character.gd<>uid://cc3t6vk7qpwey::::res://Player_Controller/scripts/Player_Character/HUD.gd<>uid://bjh5ic6qy4jtl::::res://Player_Controller/HUD ASSETS/crosshair001.png<>uid://uidicgaojgdi::::res://Player_Controller/HUD ASSETS/crosshair046.png<>uid://cxxpp8cfxb8jp::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd<>uid://yc1f2j7pl4vr::::res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres<>uid://bw4j1fbww4k8s::::res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd<>uid://fcoih1ax5dcs::::res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd<>uid://uybino34n0sj::::res://Player_Controller/weapon_animation.res
 weapon_animation.res::AnimationLibrary::1453397647944387721::1769909716::0::1::::<><><>0<>0<><>::
 world_environment.tres::Environment::3542282129581286666::1769909716::0::1::::<><><>0<>0<><>::
 ::res://Player_Controller/HUD ASSETS/::1793869258
 crosshair001.png::CompressedTexture2D::3034406870543870941::1769909716::1793869258::1::::<><><>0<>0<>a7d67f96d3dc20e8d18ae4c4d45f7091<>res://.godot/imported/crosshair001.png-1586a70203e25314f8c3057d1df1a1fb.ctex::
 crosshair046.png::CompressedTexture2D::1420488446457260718::1769909716::1793869258::1::::<><><>0<>0<>55f76e85ee6e8eab52b71bfc35769053<>res://.godot/imported/crosshair046.png-adf558f9d87ef20104f2ce22346ed1b7.s3tc.ctex::
 ::res://Player_Controller/scripts/::1769909715
-::res://Player_Controller/scripts/Player_Character/::1793972864
+::res://Player_Controller/scripts/Player_Character/::1793975948
 HUD.gd::GDScript::4972231734163882480::1793972499::0::1::::<>CanvasLayer<><>0<>0<><>::
-player_character.gd::GDScript::5131192316460066135::1793972864::0::1::::<>CharacterBody3D<><>0<>0<><>::
+player_character.gd::GDScript::5131192316460066135::1793975948::0::1::::<>CharacterBody3D<><>0<>0<><>::
 ::res://Player_Controller/scripts/Projectiles/::1793890102
 melee_weapon_projectile.gd::GDScript::2766213706861793170::1769909716::0::1::::<>Projectile<><>0<>0<><>::
 Projectile.gd::GDScript::4345765517337986696::1793890102::0::1::::Projectile<>Node3D<><>0<>0<><>::
@@ -468,7 +468,7 @@ shotgun_projectile.gd::GDScript::8087930011530456208::1769909716::0::1::::<>Proj
 bullet.gd::GDScript::1878990964729918154::1769909716::0::1::::<>RigidBody3D<><>0<>0<><>::
 hit_debug.gd::GDScript::7902296789674171235::1769909716::0::1::::<>Sprite3D<><>0<>0<><>::
 WeaponSlot.gd::GDScript::3991035347365658852::1769909716::0::1::::WeaponSlot<>Resource<><>0<>0<><>::
-weapon_resource.gd::GDScript::4839376232147356485::1769909716::0::1::::WeaponResource<>Resource<><>0<>0<><>::
+weapon_resource.gd::GDScript::4839376232147356485::1769909716::0::1::::WeaponResource<>Resource<>res://Player_Controller/scripts/Weapon_State_Machine/weapon_resource_icon.svg<>0<>0<><>::
 weapon_resource_icon.svg::CompressedTexture2D::3722951221083975908::1769909716::1793869258::1::::<><><>0<>0<>02fdd49c4709078e2c6a865ed3e61e08<>res://.godot/imported/weapon_resource_icon.svg-9e82c923a97a9a9a8c5d0df819e023d2.ctex::
 Weapon_State_Machine.gd::GDScript::6435604737822546397::1793961658::0::1::::<>Node3D<><>0<>0<><>::
 ::res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/::1793961123
