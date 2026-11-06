@@ -1,0 +1,4 @@
+res://Player_Controller/scripts/Player_Character/player_character.gd
+res://Example World/Objects/World/world.gd
+res://Player_Controller/player_character.tscn
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd

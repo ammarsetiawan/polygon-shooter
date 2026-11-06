@@ -1,0 +1,23 @@
+[gd_resource type="VisualShader" format=3 uid="uid://kfuretb65505"]
+
+[ext_resource type="Texture2D" uid="uid://clnfpevxcym48" path="res://Example World/Models/Textures/prototype texture/Green/texture_01.png" id="1_1d3md"]
+[ext_resource type="Texture2D" uid="uid://ir78fctnwldw" path="res://Example World/Models/Textures/prototype texture/Red/texture_01.png" id="2_1nc8b"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_4v8y4"]
+texture = ExtResource("1_1d3md")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_o6nfi"]
+texture = ExtResource("2_1nc8b")
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_r7xi8"]
+operator = 7
+
+[resource]
+nodes/fragment/0/position = Vector2(840, -60)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_4v8y4")
+nodes/fragment/2/position = Vector2(120, -60)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_o6nfi")
+nodes/fragment/3/position = Vector2(120, 240)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatOp_r7xi8")
+nodes/fragment/4/position = Vector2(500, -180)
+nodes/fragment/connections = PackedInt32Array(2, 0, 4, 0, 4, 0, 0, 0, 3, 0, 4, 1)

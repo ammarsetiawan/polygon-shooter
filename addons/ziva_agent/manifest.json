@@ -1,0 +1,34 @@
+{
+  "version": "v3.3.4",
+  "godotCppVersion": "v4.2.0",
+  "serverUrl": "https://ziva.sh",
+  "branch": "main",
+  "commit": "61dd37e",
+  "runtime": {
+    "linux-x64": {
+      "asset": "ziva-runtime-v3.3.4-linux-x64.zip",
+      "sha256": "c5d53e1fa600cfc5f7ea72169ba780390419e21e281abcfb881e367cf83a900d",
+      "size": 222330949
+    },
+    "linux-arm64": {
+      "asset": "ziva-runtime-v3.3.4-linux-arm64.zip",
+      "sha256": "e8f7b4ae9542fb19117e7b285a3ea27cdd69ebde6fb3bc5d7a2b7a3a09103e30",
+      "size": 224310935
+    },
+    "windows-x64": {
+      "asset": "ziva-runtime-v3.3.4-windows-x64.zip",
+      "sha256": "fa73caf19a975a833feac027f19c1e79edbc630c521f62d4e0e349647a4ae97a",
+      "size": 73018519
+    },
+    "windows-arm64": {
+      "asset": "ziva-runtime-v3.3.4-windows-arm64.zip",
+      "sha256": "34dce2066753a2ef86d9be0a8bf33c24805c713c2eab4cd6cd6cfcc8462c5b46",
+      "size": 67188529
+    },
+    "macos-universal": {
+      "asset": "ziva-runtime-v3.3.4-macos-universal.zip",
+      "sha256": "57a9f6f532e6254dfebdd9f5b933bb6b83ff57e5f8dc5a6f56535d569984402a",
+      "size": 117809714
+    }
+  }
+}
