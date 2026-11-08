@@ -408,8 +408,8 @@ weapon = SubResource("Resource_choul")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="LevelGeometry" unique_id=1843700427]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5.86237, 0)
-size = Vector3(36, 12.7247, 50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5.9407167, 0)
+size = Vector3(36, 12.881393, 50)
 material = SubResource("ShaderMaterial_xbow4")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="LevelGeometry" unique_id=1363818971]
