@@ -250,29 +250,35 @@ func _on_animation_finished(anim_name):
 
 func _on_pick_up_detection_body_entered(body: RigidBody3D):
 	var weapon_slot = body.weapon
+	var weapon_resource = body.weapon.weapon
+	
+	# Check if player already has a weapon of the same TYPE (by weapon_name)
+	# This is checked BEFORE adding to stack to enforce "max 1 of each type"
+	var has_same_type = false
 	for slot in weapon_stack:
-		if slot.weapon == weapon_slot.weapon:
-			var remaining
-
-			remaining = add_ammo(slot, weapon_slot.current_ammo+weapon_slot.reserve_ammo)
-			weapon_slot.current_ammo = min(remaining, slot.weapon.magazine)
-			weapon_slot.reserve_ammo = max(remaining - weapon_slot.current_ammo,0)
-
-			if remaining == 0:
-				body.queue_free()
-			return
-		
+		if slot.weapon and slot.weapon.weapon_name == weapon_resource.weapon_name:
+			has_same_type = true
+			# Player already has this type - add ammo to existing weapon instead
+			for s in weapon_stack:
+				if s.weapon and s.weapon.weapon_name == weapon_resource.weapon_name:
+					var remaining = add_ammo(s, weapon_slot.current_ammo+weapon_slot.reserve_ammo)
+					weapon_slot.current_ammo = min(remaining, s.weapon.magazine)
+					# JANGAN panggil body.queue_free di sini - node ammo tetap ada
+					return
+			break
+	
+	# Original pickup logic - jika player belum punya weapon type ini
 	if body.TYPE == "Weapon":
 		if weapon_stack.size() == max_weapons:
 				return
-				
+			
 		if body.Pick_Up_Ready == true:
 			var weapon_index = weapon_stack.find(current_weapon_slot)
 			weapon_stack.insert(weapon_index,weapon_slot)
 			update_weapon_stack.emit(weapon_stack)
 			exit(weapon_slot)
 			initialize(weapon_slot)
-			body.queue_free()
+			# JANGAN panggil body.queue_free di sini - node ammo tetap ada
 
 func add_ammo(_weapon_slot: WeaponSlot, ammo: int)->int:
 	var weapon = _weapon_slot.weapon

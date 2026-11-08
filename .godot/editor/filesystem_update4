@@ -1,5 +1,6 @@
-res://Player_Controller/scripts/Player_Character/player_character.gd
 res://Example World/Objects/World/world.tscn
 res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres
 res://Example World/Objects/World/world.tres
-res://Player_Controller/player_character.tscn
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd
+res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/Weapon_Pick_Up.gd
+res://Player_Controller/scripts/Player_Character/player_character.gd

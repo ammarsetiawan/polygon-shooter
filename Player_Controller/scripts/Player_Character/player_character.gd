@@ -29,7 +29,7 @@ var health: float = 100.0:
 var death_timer: Timer
 var death_timer_label: Control  # Label HUD countdown
 var _is_dead: bool = false
-var _death_time_remaining: float = 30.0  # detik sebelum respawn
+var _death_time_remaining: float = 5.0  # detik sebelum respawn
 var _death_timer_elapsed: float = 0.0  # elapsed time for countdown
 var _original_collision_mask: int = 1  # untuk dipulihkan setelah respawn
 var _death_position: Vector3 = Vector3.ZERO  # posisi saat mati (dipulihkan saat respawn)
@@ -221,6 +221,9 @@ func _enter_death() -> void:
 		death_timer_label.text = "3"
 		_death_timer_elapsed = 0.0
 		death_timer.start(_death_time_remaining)
+	
+	# MATIHIN INPUT SAAT MATI (mencegah menembak saat mati)
+	_set_input_enabled_recursive(self, false)
 
 ## Menampilkan kembali pemain saat HP sudah di atas 0 (respawn).
 func _exit_death() -> void:
@@ -235,6 +238,9 @@ func _exit_death() -> void:
 	if _is_local:
 		death_timer_label.visible = false
 		_death_timer_elapsed = 0.0
+	
+	# AKTIFKAN KEMBALI INPUT SAAT RESPAWN
+	_set_input_enabled_recursive(self, true)
 
 func _respawn() -> void:
 	# Set HP penuh; setter "health" yang akan memanggil _exit_death.
