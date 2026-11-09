@@ -29,6 +29,7 @@ var health: float = 100.0:
 var death_timer: Timer
 var death_timer_label: Control  # Label HUD countdown
 var _is_dead: bool = false
+var _is_chatting: bool = false
 var _death_time_remaining: float = 5.0  # detik sebelum respawn
 var _death_timer_elapsed: float = 0.0  # elapsed time for countdown
 var _original_collision_mask: int = 1  # untuk dipulihkan setelah respawn
@@ -240,7 +241,16 @@ func _exit_death() -> void:
 		_death_timer_elapsed = 0.0
 	
 	# AKTIFKAN KEMBALI INPUT SAAT RESPAWN
-	_set_input_enabled_recursive(self, true)
+	_set_input_enabled_recursive(self, not _is_chatting)
+
+func set_chat_active(active: bool) -> void:
+	_is_chatting = active
+	if _is_local and not _is_dead:
+		_set_input_enabled_recursive(self, not active)
+		if active:
+			velocity.x = 0.0
+			velocity.z = 0.0
+			exit_sprint()
 
 func _respawn() -> void:
 	# Set HP penuh; setter "health" yang akan memanggil _exit_death.
@@ -254,6 +264,8 @@ func update_camera_rotation() -> void:
 	
 	
 func _input(event: InputEvent) -> void:
+	if _is_dead or _is_chatting:
+		return
 	if event.is_action_pressed("ui_cancel"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -422,6 +434,13 @@ func _update_weapon_occlusion() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if _is_chatting:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		if not is_on_floor():
+			velocity.y -= fall_gravity * _delta
+		move_and_slide()
+		return
 	sprint_replenish(_delta)
 	lean_collision()
 	
@@ -452,7 +471,7 @@ func _physics_process(_delta: float) -> void:
 			jump()
 			jump_buffer = false
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept"):
+	if not _is_chatting and Input.is_action_just_pressed("jump"):
 		if jump_available:
 			if crouched:
 				crouch()
@@ -465,7 +484,7 @@ func _physics_process(_delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var input_dir: Vector2 = Vector2.ZERO if _is_chatting else Input.get_vector("left", "right", "up", "down")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	velocity.x = move_toward(velocity.x, direction.x * _speed, _acceleration*_delta)
 	velocity.z = move_toward(velocity.z, direction.z * _speed, _acceleration*_delta)

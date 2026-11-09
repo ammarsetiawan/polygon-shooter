@@ -1,3 +1,6 @@
 res://Example World/Objects/World/world.tscn
 res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres
 res://Example World/Objects/World/world.tres
+res://Example World/Objects/World/world.gd
+res://Player_Controller/scripts/Player_Character/player_character.gd
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd

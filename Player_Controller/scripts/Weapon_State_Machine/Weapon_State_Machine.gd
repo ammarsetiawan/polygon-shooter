@@ -40,6 +40,8 @@ func _ready() -> void:
 			update_weapon_stack.emit(weapon_stack)
 		
 func _unhandled_key_input(event: InputEvent) -> void:
+	if owner and ("_is_chatting" in owner and owner._is_chatting or "_is_dead" in owner and owner._is_dead):
+		return
 	if not event.is_pressed():
 		return
 		
@@ -49,6 +51,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			exit(weapon_stack[_slot_number])
 		
 func _input(event: InputEvent) -> void:
+	if owner and ("_is_chatting" in owner and owner._is_chatting or "_is_dead" in owner and owner._is_dead):
+		return
 	if event.is_action_pressed("WeaponUp"):
 		if check_valid_weapon_slot():
 			var weapon_index = weapon_stack.find(current_weapon_slot)
@@ -126,6 +130,8 @@ func shot_count_update() -> void:
 	shot_tween.tween_property(self,"_count",0,1)
 	
 func shoot() -> void:
+	if owner and ("_is_chatting" in owner and owner._is_chatting or "_is_dead" in owner and owner._is_dead):
+		return
 	if current_weapon_slot.current_ammo != 0 or not current_weapon_slot.weapon.has_ammo:
 		if current_weapon_slot.weapon.incremental_reload and animation_player.current_animation == current_weapon_slot.weapon.reload_animation:
 			animation_player.stop()
@@ -254,10 +260,8 @@ func _on_pick_up_detection_body_entered(body: RigidBody3D):
 	
 	# Check if player already has a weapon of the same TYPE (by weapon_name)
 	# This is checked BEFORE adding to stack to enforce "max 1 of each type"
-	var has_same_type = false
 	for slot in weapon_stack:
 		if slot.weapon and slot.weapon.weapon_name == weapon_resource.weapon_name:
-			has_same_type = true
 			# Player already has this type - add ammo to existing weapon instead
 			for s in weapon_stack:
 				if s.weapon and s.weapon.weapon_name == weapon_resource.weapon_name:

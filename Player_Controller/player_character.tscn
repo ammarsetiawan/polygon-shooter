@@ -2432,6 +2432,19 @@ extrapolated = false
 max_extrapolation_time = 0.2
 metadata/_custom_type_script = "uid://fcoih1ax5dcs"
 
+[node name="PropertySynchronizer2" type="Node" parent="." unique_id=900146881]
+script = ExtResource("9_giihu")
+broadcast = 2
+refresh_rate = 60
+node_path = NodePath("..")
+properties = PackedStringArray("global_position", "rotation")
+interpolated = false
+interpolation_speed = 1.0
+extrapolation = null
+extrapolated = false
+max_extrapolation_time = 0.2
+metadata/_custom_type_script = "uid://fcoih1ax5dcs"
+
 [connection signal="timeout" from="CanvasLayer/HitSight/HitSightTimer" to="CanvasLayer" method="_on_hit_sight_timer_timeout"]
 [connection signal="add_signal_to_hud" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_add_signal_to_hud"]
 [connection signal="connect_weapon_to_hud" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_connect_weapon_to_hud"]

@@ -24,6 +24,7 @@
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8purj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+sun_angle_max = 0.0
 
 [sub_resource type="Sky" id="Sky_gqn1n"]
 sky_material = SubResource("ProceduralSkyMaterial_8purj")
@@ -32,7 +33,22 @@ sky_material = SubResource("ProceduralSkyMaterial_8purj")
 background_mode = 2
 sky = SubResource("Sky_gqn1n")
 tonemap_mode = 2
+ssr_enabled = true
+ssr_fade_in = 0.17230469
+ssao_enabled = true
+ssao_radius = 9.21
+ssao_intensity = 3.68
+ssao_power = 1.261345
+ssao_detail = 1.29
+ssao_horizon = 0.08
+ssao_sharpness = 1.0
+ssao_light_affect = 0.21
+ssil_enabled = true
+ssil_radius = 9.21
+ssil_intensity = 4.81
 glow_enabled = true
+volumetric_fog_density = 0.0354
+volumetric_fog_temporal_reprojection_enabled = false
 
 [sub_resource type="Resource" id="Resource_t8nnn"]
 script = ExtResource("5_khw4j")
@@ -196,7 +212,7 @@ uv1_triplanar = true
 script = ExtResource("20_world")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1348733882]
-transform = Transform3D(0.051746484, -0.7900156, -0.6108991, -0.039040063, -0.6128512, 0.7892333, -0.9978969, -0.016990522, -0.062555164, 0, 4.406297, 0)
+transform = Transform3D(0.05391046, -0.75338215, -0.6553693, -0.035992883, -0.6573634, 0.75271374, -0.9978969, -0.016990514, -0.06255516, 0, 4.406297, 0.5761244)
 layers = 524289
 shadow_enabled = true
 shadow_caster_mask = 4294443009
@@ -408,7 +424,7 @@ weapon = SubResource("Resource_choul")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="LevelGeometry" unique_id=1843700427]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5.9407167, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 5.6585875, 0)
 size = Vector3(36, 12.881393, 50)
 material = SubResource("ShaderMaterial_xbow4")
 

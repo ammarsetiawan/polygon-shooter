@@ -10,6 +10,13 @@ const SPAWN_BASE := Vector3(14.9, 2.4, 6.1)
 # menghapusnya saat kita menutup game).
 var _local_player: Node = null
 
+#region Live Chat UI & State
+var _chat_layer: CanvasLayer
+var _chat_log: RichTextLabel
+var _chat_input: LineEdit
+var _is_chat_open: bool = false
+#endregion
+
 @onready var players_container: Node3D = $PlayersContainer
 
 func _ready() -> void:
@@ -24,6 +31,9 @@ func _ready() -> void:
 	GDSync.client_left.connect(_on_client_left)
 	# Izinkan client lain memanggil fungsi visual peluru ini.
 	GDSync.expose_func(spawn_projectile_visual)
+	# Izinkan client lain mengirim pesan live chat ke semua orang.
+	GDSync.expose_func(receive_chat_message)
+	_setup_chat_ui()
 	# Kadang client menerima node player yang sama dua kali saat join (race di
 	# dalam plugin). Kita bereskan duplikatnya tiap ada player baru masuk.
 	players_container.child_entered_tree.connect(_on_player_entered)
@@ -158,3 +168,85 @@ func spawn_projectile_visual(scene_path: String, origin: Vector3, velocity: Vect
 	get_tree().create_timer(lifetime).timeout.connect(func() -> void:
 		if is_instance_valid(projectile):
 			projectile.queue_free())
+
+#region Live Chat Implementation
+func _setup_chat_ui() -> void:
+	_chat_layer = CanvasLayer.new()
+	_chat_layer.layer = 10
+	add_child(_chat_layer)
+
+	var panel := PanelContainer.new()
+	panel.position = Vector2(20, 420)
+	panel.size = Vector2(380, 200)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.0, 0.0, 0.0, 0.45)
+	style.set_corner_radius_all(6)
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	panel.add_theme_stylebox_override("panel", style)
+	_chat_layer.add_child(panel)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 6)
+	panel.add_child(vbox)
+
+	# Area live chat semua orang di bagian atas
+	_chat_log = RichTextLabel.new()
+	_chat_log.bbcode_enabled = true
+	_chat_log.scroll_following = true
+	_chat_log.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_chat_log.selection_enabled = false
+	_chat_log.append_text("[color=#aaaaaa]Tekan '/' untuk mengetik chat...[/color]\n")
+	vbox.add_child(_chat_log)
+
+	# Form input ketik chat di bagian bawah
+	_chat_input = LineEdit.new()
+	_chat_input.placeholder_text = "Ketik pesan lalu tekan Enter..."
+	_chat_input.visible = false
+	_chat_input.text_submitted.connect(_on_chat_submitted)
+	vbox.add_child(_chat_input)
+
+func _input(event: InputEvent) -> void:
+	if not _is_chat_open:
+		if event.is_action_pressed("chat"):
+			get_viewport().set_input_as_handled()
+			_open_chat()
+	else:
+		if event.is_action_pressed("ui_cancel"):
+			get_viewport().set_input_as_handled()
+			_close_chat()
+
+func _open_chat() -> void:
+	_is_chat_open = true
+	_chat_input.visible = true
+	_chat_input.text = ""
+	_chat_input.grab_focus()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if is_instance_valid(_local_player) and _local_player.has_method("set_chat_active"):
+		_local_player.set_chat_active(true)
+
+func _close_chat() -> void:
+	_is_chat_open = false
+	_chat_input.release_focus()
+	_chat_input.text = ""
+	_chat_input.visible = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if is_instance_valid(_local_player) and _local_player.has_method("set_chat_active"):
+		_local_player.set_chat_active(false)
+
+func _on_chat_submitted(new_text: String) -> void:
+	var msg: String = new_text.strip_edges()
+	if msg != "":
+		var sender: String = "Player %d" % GDSync.get_client_id()
+		if GDSync.is_active():
+			GDSync.call_func_all(receive_chat_message, sender, msg)
+		else:
+			receive_chat_message(sender, msg)
+	_close_chat()
+
+func receive_chat_message(sender: String, message: String) -> void:
+	if _chat_log:
+		_chat_log.append_text("[b][color=#55ccff]%s:[/color][/b] %s\n" % [sender, message])
+#endregion

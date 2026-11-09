@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://dwgt7gwe3gfyy"]
+[gd_scene format=4 uid="uid://dwgt7gwe3gfyy"]
 
 [ext_resource type="Script" uid="uid://deaf6cmuofa0" path="res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/Weapon_Pick_Up.gd" id="1_1ivwt"]
 
@@ -149,15 +149,16 @@ shadow_mesh = SubResource("ArrayMesh_lkcrb")
 [sub_resource type="BoxShape3D" id="BoxShape3D_8hibu"]
 size = Vector3(0.158218, 0.304778, 0.675)
 
-[node name="BlasterQ" type="RigidBody3D"]
+[node name="BlasterQ" type="RigidBody3D" unique_id=2081201132]
 collision_layer = 8
 collision_mask = 13
 script = ExtResource("1_1ivwt")
 
-[node name="blasterQ" type="MeshInstance3D" parent="."]
+[node name="blasterQ" type="MeshInstance3D" parent="." unique_id=200667083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0015386939, 0, 0.0034801364)
 mesh = SubResource("ArrayMesh_8tvdw")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=282907374]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.32392e-06, 0.0113547, 0)
 shape = SubResource("BoxShape3D_8hibu")
