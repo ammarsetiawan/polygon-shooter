@@ -32,5 +32,3 @@ recoil_horizontal = 0.35
 recoil_recovery_speed = 7.0
 recoil_ads_multiplier = 0.55
 has_scope = true
-aim_zoom = 6.0
-zoom_sensitivity = 0.4

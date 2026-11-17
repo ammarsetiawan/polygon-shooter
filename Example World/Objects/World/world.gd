@@ -1,7 +1,6 @@
 extends Node3D
 
 const PLAYER_SCENE: PackedScene = preload("res://Player_Controller/player_character.tscn")
-const ARENA_BUILDER: GDScript = preload("res://Example World/Objects/World/arena_builder.gd")
 const LOBBY_NAME := "POLYGON_FPS_ARENA"
 
 # Titik spawn dasar. Sama di semua client supaya node sejajar.
@@ -48,8 +47,6 @@ var _is_chat_open: bool = false
 @onready var players_container: Node3D = $PlayersContainer
 
 func _ready() -> void:
-	# Bangun arena baru dari kode & matikan geometri lama yang tersimpan di scene.
-	_build_arena()
 	# Ambil nama pemain yang diisi di Main Menu.
 	_player_name = PlayerProfile.load_name()
 	GDSync.connected.connect(_on_connected)
@@ -84,24 +81,6 @@ func _ready() -> void:
 	# Mulai multiplayer ONLINE lewat server GD-Sync (butuh API key di keys.cfg).
 	# Pemain cukup membuka game: otomatis bergabung ke lobby (lihat _on_connected).
 	GDSync.start_multiplayer()
-
-## Bangun arena baru dari kode (lihat arena_builder.gd), lalu matikan geometri
-## CSG lama yang tersimpan di scene supaya keduanya tidak tumpang tindih.
-## Geometri lama hanya disembunyikan (tidak dihapus) dan collision-nya dimatikan.
-func _build_arena() -> void:
-	for path in ["LevelGeometry", "ShadowLevelGeometry"]:
-		var old: Node = get_node_or_null(path)
-		if old == null:
-			continue
-		var old_3d := old as Node3D
-		if old_3d:
-			old_3d.visible = false
-		var old_csg := old as CSGShape3D
-		if old_csg:
-			old_csg.use_collision = false
-	var arena: Node3D = ARENA_BUILDER.new()
-	arena.name = "Arena"
-	add_child(arena)
 
 func _notification(what: int) -> void:
 	# Pemain menutup jendela game: keluar dari lobby dengan rapi.

@@ -17,3 +17,4 @@ res://export_presets.cfg
 res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres
 res://Player_Controller/HUD ASSETS/scope_overlay.gdshader
 res://Example World/Objects/World/world.tres
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterE.tres

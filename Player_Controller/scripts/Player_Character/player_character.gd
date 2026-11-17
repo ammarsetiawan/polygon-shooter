@@ -59,9 +59,6 @@ var _damage_flash: float = 0.0      # 0..1, meluruh cepat tiap kali kena hit
 var _damage_intensity: float = 0.0  # nilai terhalus yang dikirim ke shader
 var _damage_spread: float = 0.0
 const DAMAGE_FLASH_DECAY := 2.2     # per detik (1.0 -> 0 dalam ~0.45 detik)
-# Interest management GD-Sync (dibuat dari kode di _create_interest_nodes).
-var interest_viewer: InterestViewer
-var interest_object: InterestObject
 var crouched: bool = false
 var crouch_blocked: bool = false
 var is_aiming: bool = false
@@ -174,26 +171,6 @@ var _sprint_latched: bool = false
 @export var damage_fade_speed: float = 3.0
 @export_group("")
 
-# --- Interest management (GD-Sync) ---
-# Membatasi berapa banyak data pemain yang dikirim ke tiap client + menyembunyikan
-# model pemain yang jauh supaya tidak ikut dirender (tidak ada draw call, bayangan,
-# maupun animasi untuk mereka). Ini yang membuat lobby banyak pemain tetap ringan.
-@export_group("Interest")
-## Radius (meter) di mana pemain lain masih menerima state pemain ini dan modelnya
-## masih tampil. Di luar radius + margin, state berhenti dikirim dan model
-## disembunyikan di client tersebut.
-@export var interest_visibility_radius: float = 60.0
-## Jarak tambahan sebelum pemain dianggap keluar radius (mencegah kedip saat di tepi).
-@export var interest_exit_margin: float = 20.0
-## Seberapa sering posisi pemain ini dilaporkan ke host untuk pengecekan jarak (Hz).
-@export var interest_viewer_update_rate: float = 4.0
-## Jarak (meter) di mana model pemain LAIN berhenti dirender di client kita.
-## Godot sudah membuang objek di luar kerucut kamera (frustum culling) sendiri;
-## ini untuk pemain yang JAUH tapi masih di dalam kerucut kamera - node-nya
-## disembunyikan sehingga tidak ada draw call, bayangan, maupun animasi.
-@export var interest_hide_distance: float = 80.0
-@export_group("")
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var jump_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var fall_gravity: float
@@ -264,7 +241,6 @@ func _ready() -> void:
 	GDSync.connect_gdsync_owner_changed(self, _on_gdsync_owner_changed)
 	_create_scope_overlay()
 	_create_damage_overlay()
-	_create_interest_nodes()
 	_apply_network_role()
 	# Inisialisasi death timer
 	death_timer = $DeathTimer
@@ -591,8 +567,7 @@ func crouch() -> void:
 		crouch_blocked = true
 
 func camera_look(Movement: Vector2) -> void:
-	# Sensitivitas diperkecil saat memakai scope ber-zoom (lihat _scope_look_scale).
-	camera_rotation += Movement * _scope_look_scale()
+	camera_rotation += Movement
 	_apply_camera_rotation()
 
 ## Terapkan sudut pandang = input mouse (camera_rotation) + offset recoil.
@@ -675,7 +650,6 @@ func _process(_delta: float) -> void:
 	_update_recoil(_delta)
 	_update_scope()
 	_update_damage_overlay(_delta)
-	_update_remote_player_culling()
 	if subviewport_camera:
 		subviewport_camera.global_transform = main_camera.global_transform
 	_update_weapon_occlusion()
@@ -694,46 +668,7 @@ func _process(_delta: float) -> void:
 		death_timer_label.size = Vector2(canvas_size.x, 120)
 		death_timer_label.position = Vector2(0, canvas_size.y * 0.25)
 
-## Interest management GD-Sync, dibuat dari KODE supaya tidak hilang kalau scene
-## di-save ulang oleh editor.
-##
-## Cara kerjanya:
-##  - "InterestViewer" melaporkan posisi pemain LOCAL ke host beberapa kali per
-##    detik, supaya host tahu siapa sedang berada di dekat siapa.
-##  - "InterestObject" menandai pemain ini: state-nya (posisi, rotasi, HP) hanya
-##    dikirim ke client yang pemainnya berada dalam `interest_visibility_radius`.
-##    Dengan `hide_parent_out_of_range`, di client yang jauh node pemain ini
-##    DISEMBUNYIKAN - jadi tidak ikut dirender (tanpa draw call, bayangan, dan
-##    animasi). Pemain yang sedang dipegang sendiri tidak pernah disembunyikan.
-## Sembunyikan pemain lain yang terlalu JAUH supaya tidak ikut dirender.
-## (Godot sudah melakukan frustum culling untuk objek di luar kamera; ini untuk
-## pemain jauh yang masih di dalam kerucut kamera.) Menyembunyikan node-nya juga
-## menghentikan animasi & label namanya, jadi makin banyak pemain tetap ringan.
-func _update_remote_player_culling() -> void:
-	for p in get_tree().get_nodes_in_group("Target"):
-		if p == self or not is_instance_valid(p):
-			continue
-		var too_far: bool = global_position.distance_to(p.global_position) > interest_hide_distance
-		if (not p.visible) != too_far:
-			p.visible = not too_far
-
-func _create_interest_nodes() -> void:
-	interest_viewer = InterestViewer.new()
-	interest_viewer.name = "InterestViewer"
-	interest_viewer.update_rate = interest_viewer_update_rate
-	add_child(interest_viewer)
-
-	interest_object = InterestObject.new()
-	interest_object.name = "InterestObject"
-	interest_object.visibility_radius = interest_visibility_radius
-	interest_object.exit_margin = interest_exit_margin
-	interest_object.update_rate = 3.0
-	# Sengaja TIDAK memakai hide_parent_out_of_range: penyembunyian itu bergantung
-	# pada daftar penerima dari host, dan kalau daftarnya belum terhitung pemain
-	# lain bisa hilang dari layar. Penyembunyian pemain jauh ditangani sendiri di
-	# _update_remote_player_culling() supaya aman & bisa diatur.
-	interest_object.hide_parent_out_of_range = false
-	add_child(interest_object)
+## Buat overlay efek damage (vignette merah) dari KODE, sama seperti overlay scope,
 ## supaya tidak ikut terhapus kalau scene di-save ulang oleh editor.
 func _create_damage_overlay() -> void:
 	var hud: CanvasLayer = get_node_or_null("CanvasLayer")
@@ -986,25 +921,7 @@ func _update_aim_state() -> void:
 	var aiming_now: bool = Input.is_action_pressed("aim") and not _is_dead and not _is_chatting
 	if aiming_now != is_aiming:
 		is_aiming = aiming_now
-		update_fov(_aim_fov_for_current_weapon() if is_aiming else default_fov)
-
-## FOV saat membidik: pakai ZOOM milik senjata kalau diset (mis. `aim_zoom = 6.0`
-## pada scope sniper -> FOV 75/6 = 12,5 derajat), kalau tidak pakai `aim_fov` biasa.
-func _aim_fov_for_current_weapon() -> float:
-	var w: WeaponResource = _current_weapon_resource()
-	if w != null and w.aim_zoom > 0.0:
-		return default_fov / w.aim_zoom
-	return aim_fov
-
-## Pengali sensitivitas mouse. Saat memakai scope ber-zoom tinggi gerakan mouse
-## diperkecil supaya bidikan tetap terkendali (diatur per senjata).
-func _scope_look_scale() -> float:
-	var w: WeaponResource = _current_weapon_resource()
-	if w == null or not w.has_scope or w.aim_zoom <= 0.0:
-		return 1.0
-	if not is_aiming or _is_dead or _is_chatting:
-		return 1.0
-	return clampf(w.zoom_sensitivity, 0.05, 1.0)
+		update_fov(aim_fov if is_aiming else default_fov)
 
 func update_fov(target_fov: float) -> void:
 	# Hanya set TARGET; FOV benar-benar digeser tiap frame di _update_camera_feel

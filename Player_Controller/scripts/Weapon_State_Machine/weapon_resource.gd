@@ -78,10 +78,3 @@ signal Zoom
 ## Kalau true, saat pemain membidik (RMB) dengan senjata ini akan tampil overlay
 ## scope PROSEDURAL (digambar dari kode shader, tanpa tekstur PNG).
 @export var has_scope: bool = false
-## Perbesaran saat membidik (RMB), dalam KELIPATAN. 0 = pakai `aim_fov` pemain
-## seperti biasa. Contoh 6.0 -> FOV jadi default_fov / 6 = 12,5 derajat
-## (setara AWP di CS / Operator di Valorant).
-@export var aim_zoom: float = 0.0
-## Sensitivitas mouse saat zoom (1.0 = sama seperti tidak zoom). Untuk zoom besar
-## nilai ini WAJIB dikecilkan supaya bidikan tidak terlalu sensitif.
-@export var zoom_sensitivity: float = 1.0
