@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://catx2kysw47d8"]
+[gd_scene format=4 uid="uid://catx2kysw47d8"]
 
 [ext_resource type="Script" uid="uid://deaf6cmuofa0" path="res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/Weapon_Pick_Up.gd" id="1_0vlch"]
 
@@ -127,17 +127,14 @@ shadow_mesh = SubResource("ArrayMesh_buocb")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ftdt3"]
 points = PackedVector3Array(-0.0300117, -0.207951, 0.154994, 0.029998, -0.207951, 0.154994, -0.0300117, -0.207951, 0.205, -0.0500059, -0.0879761, -0.0200666, -0.0300117, -0.187962, -0.245053, 0.029998, -0.207951, 0.205, 0.029998, -0.187962, -0.245053, 0.0499922, -0.0879761, -0.0200666, -0.0300117, -0.182954, 0.254926, -0.0500059, -0.0879761, 0.279969, -0.07, 0.0570359, -0.196572, -0.0500059, 0.0820323, -0.41, -0.0300117, 0.0620433, -0.41, 0.029998, -0.182954, 0.254926, 0.0499922, -0.0879761, 0.279969, 0.029998, 0.0620433, -0.41, 0.0499922, 0.0820323, -0.41, 0.07, 0.0570359, -0.196572, -0.0300117, 0.0620433, 0.37998, -0.0500059, 0.12201, 0.41, -0.0500059, -0.0479573, 0.319941, -0.07, 0.0570359, 0.149937, -0.07, 0.117044, -0.196572, -0.0500059, 0.14204, -0.41, 0.0499922, -0.0479573, 0.319941, 0.0499922, 0.12201, 0.41, 0.029998, 0.0620433, 0.37998, 0.07, 0.0570359, 0.149937, 0.0499922, 0.14204, -0.41, 0.07, 0.117044, -0.196572, -0.0500059, 0.14204, 0.41, -0.07, 0.117044, 0.149937, -0.0150059, 0.20791, -0.152105, -0.0250098, 0.192033, 0.244973, -0.0300117, 0.162029, -0.41, 0.0499922, 0.14204, 0.41, 0.07, 0.117044, 0.149937, 0.029998, 0.162029, -0.41, 0.0149922, 0.20791, -0.152105, 0.0249961, 0.192033, 0.244973, -0.0300117, 0.162029, 0.41, -0.0250098, 0.192033, 0.274992, -0.0150059, 0.20791, 0.122005, 0.0249961, 0.192033, 0.274992, 0.029998, 0.162029, 0.41, 0.0149922, 0.20791, 0.122005)
 
-[node name="blasterL" type="RigidBody3D"]
+[node name="blasterL" type="RigidBody3D" unique_id=1820096450]
 collision_layer = 8
 collision_mask = 13
 script = ExtResource("1_0vlch")
-_weapon_name = "blasterL"
-_current_ammo = 30
-_reserve_ammo = 30
 
-[node name="blasterA2" type="MeshInstance3D" parent="."]
+[node name="blasterA2" type="MeshInstance3D" parent="." unique_id=1931472698]
 mesh = SubResource("ArrayMesh_dqoe4")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1603505351]
 shape = SubResource("ConvexPolygonShape3D_ftdt3")

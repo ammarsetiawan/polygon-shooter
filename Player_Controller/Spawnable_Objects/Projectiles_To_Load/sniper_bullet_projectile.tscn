@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://b26eegme16mfw" path="res://Player_Controller/scripts/Projectiles/Projectile.gd" id="1_sniper"]
+[ext_resource type="PackedScene" path="res://Player_Controller/Spawnable_Objects/sniper_bullet.tscn" id="2_bullet"]
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_sniper")
+Projectile_Type = "Rigidbody_Projectile"
+Projectile_Velocity = 180
+Expirey_Time = 5
+Rigid_Body_Projectile = ExtResource("2_bullet")

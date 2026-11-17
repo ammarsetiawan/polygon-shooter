@@ -1,0 +1,293 @@
+[gd_scene format=3 uid="uid://dwi2s1jy5some"]
+
+[ext_resource type="Script" uid="uid://yx4cbxn5jo0s" path="res://menu/main menu/main_menu.gd" id="1_menu"]
+
+[sub_resource type="Gradient" id="Gradient_oomyd"]
+colors = PackedColorArray(0.1428257, 0.62131935, 1, 0.35, 0, 0.32086813, 0.548779, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_57sm3"]
+gradient = SubResource("Gradient_oomyd")
+use_hdr = true
+fill_to = Vector2(1, 0.3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+content_margin_left = 28.0
+content_margin_top = 28.0
+content_margin_right = 28.0
+content_margin_bottom = 28.0
+bg_color = Color(0.06, 0.09, 0.15, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.65, 1, 0.7)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 16
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_pav6r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.1, 0.4, 0.75, 1)
+border_width_left = 6
+border_color = Color(0.8, 0.95, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.2, 0.55, 0.9, 1)
+border_width_left = 6
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_cp2es"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qbks4"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_p6wtw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.12, 0.22, 0.36, 0.9)
+border_width_left = 4
+border_color = Color(0.25, 0.75, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="main_menu" type="Control" unique_id=1718236586]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1039958486]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_57sm3")
+
+[node name="MainContainer" type="MarginContainer" parent="." unique_id=1357675]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 56
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 48
+
+[node name="HBox" type="HBoxContainer" parent="MainContainer" unique_id=1030532975]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="LeftColumn" type="VBoxContainer" parent="MainContainer/HBox" unique_id=1918782216]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="HeaderBox" type="VBoxContainer" parent="MainContainer/HBox/LeftColumn" unique_id=419087127]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BadgeLabel" type="Label" parent="MainContainer/HBox/LeftColumn/HeaderBox" unique_id=419087128]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "ONLINE MULTIPLAYER"
+
+[node name="TitleLabel" type="Label" parent="MainContainer/HBox/LeftColumn/HeaderBox" unique_id=1896734027]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 46
+text = "POLYGON SHOOTER"
+
+[node name="MenuCard" type="PanelContainer" parent="MainContainer/HBox/LeftColumn" unique_id=1192539714]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="MainContainer/HBox/LeftColumn/MenuCard" unique_id=1522607431]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PlayButton" type="Button" parent="MainContainer/HBox/LeftColumn/MenuCard/ButtonsVBox" unique_id=1189403396]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxLine_pav6r")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "MULAI BERMAIN (ONLINE)"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="MainContainer/HBox/LeftColumn/MenuCard/ButtonsVBox" unique_id=550342269]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxLine_cp2es")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "PENGATURAN"
+alignment = 0
+
+[node name="ControlsButton" type="Button" parent="MainContainer/HBox/LeftColumn/MenuCard/ButtonsVBox" unique_id=594971856]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxLine_qbks4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "KONTROL"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="MainContainer/HBox/LeftColumn/MenuCard/ButtonsVBox" unique_id=585970081]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxLine_p6wtw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "KELUAR GAME"
+alignment = 0
+
+[node name="StatusLabel" type="Label" parent="MainContainer/HBox/LeftColumn" unique_id=585970082]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 0.95, 0.9)
+theme_override_font_sizes/font_size = 14
+text = " server lobby otomatis."
+
+[node name="RightColumn" type="CenterContainer" parent="MainContainer/HBox" unique_id=1480256033]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SettingsPanel" type="PanelContainer" parent="MainContainer/HBox/RightColumn" unique_id=497801881]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/HBox/RightColumn/SettingsPanel" unique_id=1187812793]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox" unique_id=1620115256]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "PENGATURAN"
+
+[node name="VolumeBox" type="VBoxContainer" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox" unique_id=757594443]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="VolumeHeader" type="HBoxContainer" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox/VolumeBox" unique_id=236453146]
+layout_mode = 2
+
+[node name="VolumeLabel" type="Label" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox/VolumeBox/VolumeHeader" unique_id=328350753]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "Volume Suara Utama"
+
+[node name="VolumeValueLabel" type="Label" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox/VolumeBox/VolumeHeader" unique_id=971076850]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "100%"
+
+[node name="VolumeSlider" type="HSlider" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox/VolumeBox" unique_id=1972261714]
+unique_name_in_owner = true
+layout_mode = 2
+value = 100.0
+
+[node name="FullscreenCheck" type="CheckButton" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox" unique_id=1101322936]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Mode Layar Penuh (Fullscreen)"
+
+[node name="CloseSettingsButton" type="Button" parent="MainContainer/HBox/RightColumn/SettingsPanel/VBox" unique_id=726969109]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "TUTUP PENGATURAN"
+
+[node name="ControlsPanel" type="PanelContainer" parent="MainContainer/HBox/RightColumn" unique_id=1630812055]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/HBox/RightColumn/ControlsPanel" unique_id=1981261489]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="MainContainer/HBox/RightColumn/ControlsPanel/VBox" unique_id=1402224150]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "KONTROL GAME"
+
+[node name="ControlsText" type="RichTextLabel" parent="MainContainer/HBox/RightColumn/ControlsPanel/VBox" unique_id=196930924]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b][color=#55ccff]W, A, S, D[/color][/b] — Bergerak
+[b][color=#55ccff]Space[/color][/b] — Lompat
+[b][color=#55ccff]Shift / Ctrl[/color][/b] — Sprint / Jalan Pelan
+[b][color=#55ccff]C[/color][/b] — Jongkok (Crouch)
+[b][color=#55ccff]Q / E[/color][/b] — Miring Kiri / Kanan (Lean)
+[b][color=#55ccff]Klik Kiri / Klik Kanan[/color][/b] — Tembak / Bidik (Aim)
+[b][color=#55ccff]R / F / G[/color][/b] — Reload / Melee / Drop Senjata
+[b][color=#55ccff]1 - 4 / Scroll[/color][/b] — Ganti Senjata
+[b][color=#55ccff]/ (Slash)[/color][/b] — Buka Live Chat"
+
+[node name="CloseControlsButton" type="Button" parent="MainContainer/HBox/RightColumn/ControlsPanel/VBox" unique_id=1098320564]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "TUTUP PANDUAN"

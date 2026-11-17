@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="WeaponResource" format=3]
+
+[ext_resource type="Script" uid="uid://ca7h24lxxrtvx" path="res://Player_Controller/scripts/Weapon_State_Machine/weapon_resource.gd" id="1_wr"]
+[ext_resource type="PackedScene" path="res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/sniper_bullet_projectile.tscn" id="2_proj"]
+[ext_resource type="PackedScene" path="res://Player_Controller/Spawnable_Objects/Weapons/blasterE.tscn" id="3_drop"]
+[ext_resource type="PackedScene" path="res://Player_Controller/Spawnable_Objects/SprayProfiles/spray_profile_sniper.tscn" id="4_spray"]
+
+
+[resource]
+script = ExtResource("1_wr")
+weapon_name = "blasterE"
+pick_up_animation = "Global/blasterE Active"
+shoot_animation = "Global/blasterE Shoot"
+reload_animation = "Global/blasterE Reload"
+change_animation = "Global/blasterE De-Activate"
+drop_animation = "Global/blasterE Drop"
+out_of_ammo_animation = "Global/blasterE OOA"
+melee_animation = "Global/blasterE Melee"
+magazine = 5
+max_ammo = 15
+damage = 100
+melee_damage = 2.0
+auto_fire = false
+fire_range = 400
+can_be_dropped = true
+weapon_drop = ExtResource("3_drop")
+weapon_spray = ExtResource("4_spray")
+projectile_to_load = ExtResource("2_proj")
+fire_rate = 1.1
+recoil_vertical = 3.0
+recoil_horizontal = 0.35
+recoil_recovery_speed = 7.0
+recoil_ads_multiplier = 0.55
+has_scope = true
+aim_zoom = 6.0
+zoom_sensitivity = 0.4

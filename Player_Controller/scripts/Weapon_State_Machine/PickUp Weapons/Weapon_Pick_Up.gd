@@ -9,3 +9,5 @@ var Pick_Up_Ready: bool = false
 func _ready():
 	await get_tree().create_timer(2.0).timeout
 	Pick_Up_Ready = true
+	
+	

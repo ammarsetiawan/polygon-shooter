@@ -20,7 +20,10 @@ func _ready() -> void:
 
 func _on_player_health_changed(new_health: float, new_max_health: float) -> void:
 	if health_label:
-		health_label.text = "HP: %d / %d" % [roundi(new_health), roundi(new_max_health)]
+		# Tulis hanya kalau berubah (setter health bisa dipanggil sangat sering).
+		var t: String = "HP: %d / %d" % [roundi(new_health), roundi(new_max_health)]
+		if health_label.text != t:
+			health_label.text = t
 
 func _on_weapons_manager_update_weapon_stack(WeaponStack):
 	current_weapon_stack.text = ""
@@ -28,7 +31,10 @@ func _on_weapons_manager_update_weapon_stack(WeaponStack):
 		current_weapon_stack.text += "\n"+i.weapon.weapon_name
 
 func _on_weapons_manager_update_ammo(Ammo):
-	current_ammo_label.set_text(str(Ammo[0])+" / "+str(Ammo[1]))
+	# Tulis hanya kalau berubah.
+	var t: String = str(Ammo[0])+" / "+str(Ammo[1])
+	if current_ammo_label.text != t:
+		current_ammo_label.set_text(t)
 
 func _on_weapons_manager_weapon_changed(WeaponName):
 	current_weapon_label.set_text(WeaponName)

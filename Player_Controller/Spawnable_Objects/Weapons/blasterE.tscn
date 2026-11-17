@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://deaf6cmuofa0" path="res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/Weapon_Pick_Up.gd" id="1_pickup"]
+[ext_resource type="PackedScene" uid="uid://cxv1o3aloqs4f" path="res://Example World/Models/Kenney Weapons/blasterE.glb" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_blasterE"]
+size = Vector3(0.22, 0.45, 1.45)
+
+[node name="blasterE" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 13
+script = ExtResource("1_pickup")
+
+[node name="blasterE_model" parent="." instance=ExtResource("2_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, -0.15)
+shape = SubResource("BoxShape3D_blasterE")

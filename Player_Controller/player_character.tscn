@@ -8,7 +8,8 @@
 [ext_resource type="Resource" uid="uid://yc1f2j7pl4vr" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres" id="6_tpjp5"]
 [ext_resource type="Script" uid="uid://bw4j1fbww4k8s" path="res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="6_wj0qi"]
 [ext_resource type="Script" uid="uid://fcoih1ax5dcs" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="9_giihu"]
-[ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://Player_Controller/weapon_animation.res" id="13_lmhsg"]
+[ext_resource type="AnimationLibrary" path="res://Player_Controller/weapon_animation.res" id="13_lmhsg"]
+[ext_resource type="PackedScene" uid="uid://cxv1o3aloqs4f" path="res://Example World/Models/Kenney Weapons/blasterE.glb" id="14_blastere"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_rj3p7"]
 
@@ -26,6 +27,7 @@ thickness = 10
 [sub_resource type="Resource" id="Resource_4pcyg"]
 script = ExtResource("6_wj0qi")
 weapon = ExtResource("6_tpjp5")
+current_ammo = 30
 reserve_ammo = 60
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifhgq"]
@@ -2155,7 +2157,6 @@ left_lean_collision = NodePath("Camera/LeanRighCollision")
 sprint_timer = NodePath("SprintTimer")
 sprint_cooldown_time = 0.2
 sprint_replenish_rate = 1.5
-acceleration = 20.0
 coyote_timer = NodePath("CoyoteTimer")
 metadata/_edit_group_ = true
 
@@ -2234,6 +2235,7 @@ wait_time = 0.05
 one_shot = true
 
 [node name="SprintBar" type="HSlider" parent="CanvasLayer" unique_id=1987921148]
+visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -2354,6 +2356,13 @@ layers = 524288
 mesh = SubResource("ArrayMesh_8tvdw")
 skeleton = NodePath("")
 
+[node name="blasterE" type="Node3D" parent="Camera/LeanPivot/MainCamera/Weapons_Manager/Weapons_Models" unique_id=1072371800]
+transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 0.193, 1.255, -0.643)
+visible = false
+
+[node name="blasterE_model" parent="Camera/LeanPivot/MainCamera/Weapons_Manager/Weapons_Models/blasterE" unique_id=830117761 instance=ExtResource("14_blastere")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0.2)
+
 [node name="BulletPoint" type="Marker3D" parent="Camera/LeanPivot/MainCamera/Weapons_Manager" unique_id=785176848]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.266143, -0.288234, -0.779217)
@@ -2383,7 +2392,7 @@ debug_shape_custom_color = Color(0, 0, 1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 shape = SubResource("CapsuleShape3D_73v4a")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="BodyCollision" unique_id=572692842]
+[node name="CSGMesh3D" type="MeshInstance3D" parent="BodyCollision" unique_id=572692842]
 transform = Transform3D(0.88000005, 0, 0, 0, 0.88000005, 0, 0, 0, 0.88000005, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_57sm3")
 
@@ -2424,23 +2433,11 @@ one_shot = true
 one_shot = true
 script = ExtResource("9_giihu")
 broadcast = 2
+refresh_rate = 15
 node_path = NodePath("..")
 properties = PackedStringArray("global_position", "rotation")
 interpolated = true
-interpolation_speed = 20.0
-extrapolated = false
-max_extrapolation_time = 0.2
-metadata/_custom_type_script = "uid://fcoih1ax5dcs"
-
-[node name="PropertySynchronizer2" type="Node" parent="." unique_id=900146881]
-script = ExtResource("9_giihu")
-broadcast = 2
-refresh_rate = 60
-node_path = NodePath("..")
-properties = PackedStringArray("global_position", "rotation")
-interpolated = false
-interpolation_speed = 1.0
-extrapolation = null
+interpolation_speed = 18.0
 extrapolated = false
 max_extrapolation_time = 0.2
 metadata/_custom_type_script = "uid://fcoih1ax5dcs"

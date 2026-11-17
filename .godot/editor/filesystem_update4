@@ -1,6 +1,19 @@
-res://Example World/Objects/World/world.tscn
-res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres
-res://Example World/Objects/World/world.tres
-res://Example World/Objects/World/world.gd
 res://Player_Controller/scripts/Player_Character/player_character.gd
+res://Example World/Objects/World/world.gd
+res://Player_Controller/player_character.tscn
+res://Player_Controller/weapon_animation.res
+res://Player_Controller/scripts/Player_Character/HUD.gd
+res://Player_Controller/scripts/Weapon_State_Machine/weapon_resource.gd
 res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd
+res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/Weapon_Pick_Up.gd
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterM.tres
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres
+res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterQ.tres
+res://Example World/Objects/World/world.tscn
+res://Player_Controller/Spawnable_Objects/Weapons/blaster_L.tscn
+res://export_presets.cfg
+res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres
+res://Player_Controller/HUD ASSETS/scope_overlay.gdshader
+res://Example World/Objects/World/world.tres

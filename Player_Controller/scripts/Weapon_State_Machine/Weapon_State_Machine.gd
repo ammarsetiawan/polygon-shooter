@@ -22,6 +22,10 @@ var _count = 0
 var shot_tween
 @export var weapon_stack:Array[WeaponSlot] #An Array of weapons currently in possesion by the player
 var current_weapon_slot: WeaponSlot = null
+# Waktu (detik) tembakan terakhir, dipakai membatasi rate of fire.
+var _last_shot_time: float = -100.0
+# Apakah tombol tembak sedang ditahan (untuk auto_fire yang diatur fire_rate).
+var _trigger_held: bool = false
 
 func _ready() -> void:
 	# Daftarkan fungsi remote agar animasi senjata bisa dipicu dari client lain.
@@ -66,13 +70,15 @@ func _input(event: InputEvent) -> void:
 			exit(weapon_stack[weapon_index])
 		
 	if event.is_action_pressed("Shoot"):
+		_trigger_held = true
 		if check_valid_weapon_slot():
 			shoot()
 	
 	if event.is_action_released("Shoot"):
+		_trigger_held = false
 		if check_valid_weapon_slot():
 			shot_count_update()
-	
+
 	if event.is_action_pressed("Reload"):
 		if check_valid_weapon_slot():
 			reload()
@@ -84,6 +90,21 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Melee"):
 		if check_valid_weapon_slot():
 			melee()
+
+## Auto-fire yang dikendalikan fire_rate: selama tombol tembak ditahan dan senjata
+## punya auto_fire + fire_rate, tembakan diulang tiap 1/fire_rate detik. Ini membuat
+## tempo tembakan tidak bergantung pada animasi shoot (mis. senjata yang animasi
+## shoot-nya belum ada). Kalau fire_rate 0, perilaku lama (animasi) tetap dipakai.
+func _process(_delta: float) -> void:
+	if not _trigger_held or current_weapon_slot == null or current_weapon_slot.weapon == null:
+		return
+	if owner == null or not GDSync.is_gdsync_owner(owner):
+		return
+	var w: WeaponResource = current_weapon_slot.weapon
+	if not w.auto_fire or w.fire_rate <= 0.0:
+		return
+	if Time.get_ticks_msec() / 1000.0 - _last_shot_time >= 1.0 / w.fire_rate:
+		shoot()
 
 func check_valid_weapon_slot()->bool:
 	if current_weapon_slot:
@@ -132,28 +153,52 @@ func shot_count_update() -> void:
 func shoot() -> void:
 	if owner and ("_is_chatting" in owner and owner._is_chatting or "_is_dead" in owner and owner._is_dead):
 		return
-	if current_weapon_slot.current_ammo != 0 or not current_weapon_slot.weapon.has_ammo:
-		if current_weapon_slot.weapon.incremental_reload and animation_player.current_animation == current_weapon_slot.weapon.reload_animation:
+	var w: WeaponResource = current_weapon_slot.weapon
+	if current_weapon_slot.current_ammo != 0 or not w.has_ammo:
+		if w.incremental_reload and animation_player.current_animation == w.reload_animation:
 			animation_player.stop()
-			
-		if not animation_player.is_playing():
-			animation_player.play(current_weapon_slot.weapon.shoot_animation)
-			GDSync.call_func(_remote_play_anim, current_weapon_slot.weapon.shoot_animation)
-			if current_weapon_slot.weapon.has_ammo:
-				current_weapon_slot.current_ammo -= 1
-				
-			update_ammo.emit([current_weapon_slot.current_ammo, current_weapon_slot.reserve_ammo])
-			
-			if shot_tween:
-				shot_tween.kill()
-			
-			var Spread = Vector2.ZERO
-			
-			if current_weapon_slot.weapon.weapon_spray:
-				_count = _count + 1
-				Spread = spray_profiles[current_weapon_slot.weapon.weapon_name].Get_Spray(_count, current_weapon_slot.weapon.magazine)
-				
-			load_projectile(Spread)
+
+		# Rate of fire: kalau fire_rate diisi, tembakan dibatasi ke 1/fire_rate detik.
+		# Epsilon kecil dipakai supaya auto_fire (yang dipicu saat animasi shoot
+		# selesai) tidak ikut terblokir ketika durasi animasi == interval.
+		var now: float = Time.get_ticks_msec() / 1000.0
+		if w.fire_rate > 0.0 and now - _last_shot_time + 0.02 < 1.0 / w.fire_rate:
+			return
+
+		var can_fire: bool = not animation_player.is_playing()
+		# Kalau yang sedang jalan justru animasi tembakannya sendiri, boleh menembak
+		# lagi walau animasinya belum selesai - supaya tempo tembakan benar-benar
+		# mengikuti fire_rate, bukan panjang animasi.
+		if not can_fire and w.fire_rate > 0.0 and animation_player.current_animation == w.shoot_animation:
+			can_fire = true
+		if not can_fire:
+			return
+
+		if animation_player.has_animation(w.shoot_animation):
+			animation_player.play(w.shoot_animation)
+		GDSync.call_func(_remote_play_anim, w.shoot_animation)
+		_last_shot_time = now
+		if w.has_ammo:
+			current_weapon_slot.current_ammo -= 1
+
+		update_ammo.emit([current_weapon_slot.current_ammo, current_weapon_slot.reserve_ammo])
+
+		if shot_tween:
+			shot_tween.kill()
+
+		var Spread = Vector2.ZERO
+
+		if w.weapon_spray:
+			_count = _count + 1
+			Spread = spray_profiles[w.weapon_name].Get_Spray(_count, w.magazine)
+
+		load_projectile(Spread)
+
+		# Recoil ala CoD / Delta Force: pandangan penembak didorong SETELAH peluru
+		# dilepas (jadi tembakan itu sendiri tetap lurus), lalu pulih otomatis.
+		# Hanya dijalankan pada pemilik node ini.
+		if owner and GDSync.is_gdsync_owner(owner) and owner.has_method("add_recoil"):
+			owner.add_recoil(w.recoil_vertical, randf_range(-w.recoil_horizontal, w.recoil_horizontal))
 	else:
 		reload()
 		
@@ -300,13 +345,13 @@ func add_ammo(_weapon_slot: WeaponSlot, ammo: int)->int:
 func _remote_play_anim(anim_name: StringName) -> void:
 	if GDSync.is_gdsync_owner(owner):
 		return
-	if animation_player:
+	if animation_player and animation_player.has_animation(anim_name):
 		animation_player.play(anim_name)
 
 func _remote_queue_anim(anim_name: StringName) -> void:
 	if GDSync.is_gdsync_owner(owner):
 		return
-	if animation_player:
+	if animation_player and animation_player.has_animation(anim_name):
 		animation_player.queue(anim_name)
 
 func _remote_change_weapon(index: int) -> void:

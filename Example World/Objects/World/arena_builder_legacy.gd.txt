@@ -1,0 +1,151 @@
+class_name ArenaBuilder
+extends Node3D
+
+## Membangun arena FPS versi baru dari KODE.
+##
+## Kenapa dibuat dari kode (bukan menambah node di world.tscn):
+##  - aman: tidak bisa hilang/rusak kalau Godot menyimpan ulang scene-nya
+##  - identik di semua client (murni perhitungan, tidak perlu disinkronkan)
+##  - gampang diatur: semua ukuran/posisi ada di _build() di bawah
+##
+## Desain supaya permainan lebih seru & menantang:
+##  - LANTAI rata + DINDING keliling (pemain tidak bisa keluar arena)
+##  - MENARA TENGAH (4 m): posisi paling kuat, tapi paling terekspos.
+##    Dinaiki lewat RAMPA (bidang miring) dari dua sisi.
+##  - GEDUNG TINGGI (6 m, sayap barat) + GEDUNG RENDAH (3 m, sayap timur):
+##    dua jalur vertikal, bagus untuk sniper dan flanking.
+##  - CATWALK (3 m) di dinding timur: jalur pindah cepat tanpa turun ke lantai.
+##  - PETI & DINDING RENDAH: cover untuk mendekat dengan aman, sekaligus
+##    memecah garis bidik panjang.
+##
+## Zona yang SENGAJA dibiarkan kosong supaya barang bawaan scene tetap pas:
+##  - rak senjata + amunisi : z 10.6 .. 13.0  (dibuatkan bangku di bawahnya)
+##  - spawn pemain          : x 12 .. 18, z 3 .. 9
+##  - galeri target         : z 20 .. 24      (30 target di z 23.8)
+
+const FLOOR_Y := 1.38     # permukaan atas lantai (sama seperti map lama)
+const WALL_H := 8.0       # tinggi dinding keliling di atas lantai
+const TEX_PATH := "res://Example World/Models/Textures/prototype texture/Dark/texture_01.png"
+
+var _mat: StandardMaterial3D
+
+func _ready() -> void:
+	_mat = StandardMaterial3D.new()
+	_mat.albedo_texture = load(TEX_PATH)
+	# Triplanar supaya tekstur tidak melar di balok yang panjang/pendek.
+	_mat.uv1_triplanar = true
+	_mat.uv1_scale = Vector3(0.3, 0.3, 0.3)
+
+	var c := CSGCombiner3D.new()
+	c.name = "ArenaGeometry"
+	c.use_collision = true
+	_build(c)
+	# Baru dimasukkan ke dalam tree SETELAH semua kotak disiapkan, supaya CSG
+	# dihitung sekali saja (kalau ditambah satu-satu, CSG dihitung tiap tambah).
+	add_child(c)
+
+## Tambah satu balok. (cx, cz) = titik tengah mendatar, top = permukaan ATAS.
+func _box(c: CSGCombiner3D, cx: float, top: float, cz: float, sx: float, h: float, sz: float) -> void:
+	var b := CSGBox3D.new()
+	b.size = Vector3(sx, h, sz)
+	b.material = _mat
+	b.position = Vector3(cx, top - h * 0.5, cz)
+	c.add_child(b)
+
+## Balok mengikuti lantai (dasar di lantai, tinggi sampai `top`).
+func _solid(c: CSGCombiner3D, cx: float, top: float, cz: float, sx: float, sz: float) -> void:
+	_box(c, cx, top, cz, sx, top - FLOOR_Y, sz)
+
+## Rampa (bidang miring) - BUKAN tangga anak tangga: CharacterBody3D Godot tidak
+## bisa naik anak tangga (bidang tegak dianggap dinding), sedangkan rampa ~29
+## derajat (di bawah floor_max_angle 45) bisa ditanjaki jalan biasa.
+## `low_z` = ujung bawah (di lantai), `high_z` = ujung atas (setinggi top_h).
+func _ramp_z(c: CSGCombiner3D, cx: float, width: float, low_z: float, high_z: float, top_h: float) -> void:
+	var run: float = absf(high_z - low_z)
+	if run < 0.01:
+		return
+	var angle: float = atan2(top_h, run)
+	var b := CSGBox3D.new()
+	b.size = Vector3(width, 0.5, sqrt(run * run + top_h * top_h))
+	b.material = _mat
+	b.position = Vector3(cx, FLOOR_Y + top_h * 0.5 - 0.25 / cos(angle), (low_z + high_z) * 0.5)
+	b.rotation.x = -signf(high_z - low_z) * angle
+	c.add_child(b)
+
+## Sama seperti _ramp_z tapi naik sepanjang sumbu X.
+func _ramp_x(c: CSGCombiner3D, cz: float, width: float, low_x: float, high_x: float, top_h: float) -> void:
+	var run: float = absf(high_x - low_x)
+	if run < 0.01:
+		return
+	var angle: float = atan2(top_h, run)
+	var b := CSGBox3D.new()
+	b.size = Vector3(sqrt(run * run + top_h * top_h), 0.5, width)
+	b.material = _mat
+	b.position = Vector3((low_x + high_x) * 0.5, FLOOR_Y + top_h * 0.5 - 0.25 / cos(angle), cz)
+	b.rotation.z = signf(high_x - low_x) * angle
+	c.add_child(b)
+
+func _build(c: CSGCombiner3D) -> void:
+	# ===================== LANTAI & DINDING KELILING =====================
+	_box(c, 7.0, FLOOR_Y, 0.0, 34.0, 1.0, 48.0)                      # lantai
+	_box(c, -9.5, FLOOR_Y + WALL_H, 0.0, 1.0, WALL_H, 50.0)          # dinding barat
+	_box(c, 24.5, FLOOR_Y + WALL_H, 0.0, 1.0, WALL_H, 50.0)          # dinding timur
+	_box(c, 7.0, FLOOR_Y + WALL_H, -24.5, 36.0, WALL_H, 1.0)         # dinding utara
+	_box(c, 7.0, FLOOR_Y + WALL_H, 24.5, 36.0, WALL_H, 1.0)          # dinding selatan
+
+	# ===================== MENARA TENGAH (4 m) =====================
+	# x -2..8, z 1..11. Puncak = lantai tertinggi, dua tangga naik.
+	_solid(c, 3.0, FLOOR_Y + 4.0, 6.0, 10.0, 10.0)
+	_box(c, 1.0, FLOOR_Y + 5.2, 3.0, 2.0, 1.2, 2.0)                  # cover di atas
+	_box(c, 5.0, FLOOR_Y + 5.2, 9.0, 2.0, 1.2, 2.0)
+	_box(c, 3.0, FLOOR_Y + 5.2, 6.0, 1.4, 1.2, 1.4)
+	_ramp_z(c, 3.0, 4.0, -6.2, 1.0, 4.0)                        # rampa sisi -Z
+	_ramp_x(c, 6.0, 4.0, -9.2, -2.0, 4.0)                       # rampa sisi -X
+
+	# ===================== GEDUNG TINGGI (6 m) - sayap barat =====================
+	# x -9..-1, z -22..-8. Atap bisa dipakai sniper; tangga di sisi +Z.
+	_solid(c, -5.0, FLOOR_Y + 6.0, -15.0, 8.0, 14.0)
+	_box(c, -7.0, FLOOR_Y + 7.2, -20.0, 2.0, 1.2, 2.0)
+	_box(c, -3.0, FLOOR_Y + 7.2, -10.0, 2.0, 1.2, 2.0)
+	_ramp_z(c, -5.0, 4.0, 2.8, -8.0, 6.0)
+
+	# ===================== GEDUNG RENDAH (3 m) - sayap timur =====================
+	# x 12..21, z -20..-12.
+	_solid(c, 16.5, FLOOR_Y + 3.0, -16.0, 9.0, 8.0)
+	_box(c, 14.0, FLOOR_Y + 4.2, -18.0, 2.0, 1.2, 2.0)
+	_box(c, 19.0, FLOOR_Y + 4.2, -14.0, 2.0, 1.2, 2.0)
+	_ramp_z(c, 16.5, 4.0, -6.6, -12.0, 3.0)
+
+	# ===================== CATWALK (3 m) - dinding timur =====================
+	# x 20..24, z -8..8, tangga dari ujung -Z.
+	_solid(c, 22.0, FLOOR_Y + 3.0, 0.0, 4.0, 16.0)
+	_ramp_z(c, 22.5, 3.0, -13.4, -8.0, 3.0)
+
+	# ===================== PETI (cover peeking) =====================
+	_box(c, -7.0, FLOOR_Y + 1.8, -4.0, 1.8, 1.8, 1.8)
+	_box(c, -5.2, FLOOR_Y + 1.8, -4.6, 1.8, 1.8, 1.8)
+	_box(c, -7.0, FLOOR_Y + 3.6, -4.0, 1.8, 1.8, 1.8)                # ditumpuk
+	_box(c, -3.0, FLOOR_Y + 1.8, 2.0, 1.8, 1.8, 1.8)
+	_box(c, -8.5, FLOOR_Y + 1.8, -6.0, 1.8, 1.8, 1.8)
+	_box(c, 0.5, FLOOR_Y + 1.8, -9.0, 1.8, 1.8, 1.8)
+	_box(c, 6.5, FLOOR_Y + 1.8, -9.5, 1.8, 1.8, 1.8)
+	_box(c, 4.0, FLOOR_Y + 1.8, 14.0, 1.8, 1.8, 1.8)
+	_box(c, 8.0, FLOOR_Y + 1.8, 17.0, 1.8, 1.8, 1.8)
+	_box(c, -8.0, FLOOR_Y + 1.8, 10.0, 1.8, 1.8, 1.8)
+	_box(c, -5.0, FLOOR_Y + 1.8, 14.0, 1.8, 1.8, 1.8)
+	_box(c, 11.0, FLOOR_Y + 1.8, -18.0, 1.8, 1.8, 1.8)
+
+	# ===================== DINDING RENDAH (cover pinggang) =====================
+	_box(c, -9.0, FLOOR_Y + 0.9, -4.0, 0.6, 0.9, 6.0)
+	_box(c, 10.0, FLOOR_Y + 0.9, 3.0, 0.6, 0.9, 8.0)
+	_box(c, 8.0, FLOOR_Y + 0.9, -6.0, 6.0, 0.9, 0.6)
+	_box(c, 2.0, FLOOR_Y + 0.9, 16.0, 6.0, 0.9, 0.6)
+	_box(c, 18.0, FLOOR_Y + 0.9, 14.0, 6.0, 0.9, 0.6)
+	_box(c, 11.5, FLOOR_Y + 0.9, -14.0, 0.6, 0.9, 6.0)
+	_box(c, 13.0, FLOOR_Y + 2.6, 0.0, 1.2, 2.6, 1.2)                 # pilar
+
+	# ===================== BANGKU RAK SENJATA & AMUNISI =====================
+	# Barang bawaan scene mengapung di sini; dibuatkan alas supaya terlihat rapi.
+	_box(c, 18.5, FLOOR_Y + 0.34, 11.8, 9.5, 0.34, 1.6)              # bangku senjata
+	_box(c, 15.8, FLOOR_Y + 1.17, 11.76, 2.6, 0.3, 0.9)              # alas ammo sniper
+	_box(c, 20.35, FLOOR_Y + 0.92, 11.9, 5.8, 0.3, 0.9)              # alas ammo lain

@@ -20,6 +20,9 @@
 [ext_resource type="Resource" uid="uid://dgayjkjx4mckc" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterQ.tres" id="13_xqfky"]
 [ext_resource type="Shader" uid="uid://kfuretb65505" path="res://Example World/Objects/World/world.tres" id="19_cthwv"]
 [ext_resource type="Script" uid="uid://b2qoc8g50i1yn" path="res://Example World/Objects/World/world.gd" id="20_world"]
+[ext_resource type="PackedScene" path="res://Player_Controller/Spawnable_Objects/Weapons/blasterE.tscn" id="14_blastere_scene"]
+[ext_resource type="Resource" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterE.tres" id="14_blastere_res"]
+[ext_resource type="PackedScene" path="res://Player_Controller/Spawnable_Objects/Clips/blaster_e_ammo.tscn" id="15_eclip"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8purj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -33,9 +36,7 @@ sky_material = SubResource("ProceduralSkyMaterial_8purj")
 background_mode = 2
 sky = SubResource("Sky_gqn1n")
 tonemap_mode = 2
-ssr_enabled = true
 ssr_fade_in = 0.17230469
-ssao_enabled = true
 ssao_radius = 9.21
 ssao_intensity = 3.68
 ssao_power = 1.261345
@@ -43,7 +44,6 @@ ssao_detail = 1.29
 ssao_horizon = 0.08
 ssao_sharpness = 1.0
 ssao_light_affect = 0.21
-ssil_enabled = true
 ssil_radius = 9.21
 ssil_intensity = 4.81
 glow_enabled = true
@@ -74,6 +74,11 @@ reserve_ammo = 9
 script = ExtResource("5_khw4j")
 weapon = ExtResource("13_xqfky")
 reserve_ammo = 4
+
+[sub_resource type="Resource" id="Resource_blasterE"]
+script = ExtResource("5_khw4j")
+weapon = ExtResource("14_blastere_res")
+reserve_ammo = 15
 
 [sub_resource type="Resource" id="Resource_8purj"]
 resource_local_to_scene = true
@@ -341,8 +346,28 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.382
 freeze = true
 weapon = SubResource("Resource_ntxxd")
 
+[node name="blasterE" parent="Weapons" instance=ExtResource("14_blastere_scene")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14.6, 1.95, 11.55)
+freeze = true
+weapon = SubResource("Resource_blasterE")
+
 [node name="ammo" type="Node3D" parent="." unique_id=150361743]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12.9044, 0, 0)
+
+[node name="blasterE_Ammo" parent="ammo" instance=ExtResource("15_eclip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.76, 2.65, -1.8956)
+
+[node name="blasterE_Ammo2" parent="ammo" instance=ExtResource("15_eclip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.76, 2.65, -2.3956)
+
+[node name="blasterE_Ammo3" parent="ammo" instance=ExtResource("15_eclip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.76, 2.65, -2.8956)
+
+[node name="blasterE_Ammo4" parent="ammo" instance=ExtResource("15_eclip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.76, 2.65, -3.3956)
+
+[node name="blasterE_Ammo5" parent="ammo" instance=ExtResource("15_eclip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.76, 2.65, -3.8956)
 
 [node name="blasterI_Clip" parent="ammo" unique_id=22057903 instance=ExtResource("9_764ue")]
 transform = Transform3D(-0.0581563, 0.998308, -1.59995e-08, 5.86793e-08, 1.9445e-08, 1, 0.998308, 0.0581563, -5.97109e-08, 11.9669, 2.51447, -9.74606)

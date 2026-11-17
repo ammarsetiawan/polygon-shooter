@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://deaf6cmuofa0" path="res://Player_Controller/scripts/Weapon_State_Machine/PickUp Weapons/Weapon_Pick_Up.gd" id="1_pickup"]
+[ext_resource type="Script" uid="uid://bw4j1fbww4k8s" path="res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="2_slot"]
+[ext_resource type="Resource" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterE.tres" id="3_res"]
+[ext_resource type="PackedScene" uid="uid://d26whw5k1rw08" path="res://Example World/Models/Kenney Weapons/foamBulletB-low.glb" id="4_model"]
+
+[sub_resource type="Resource" id="Resource_ammo_e"]
+resource_local_to_scene = true
+script = ExtResource("2_slot")
+weapon = ExtResource("3_res")
+current_ammo = 5
+reserve_ammo = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e"]
+size = Vector3(0.11, 0.3, 0.11)
+
+[node name="blasterE_Ammo" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_pickup")
+weapon = SubResource("Resource_ammo_e")
+TYPE = "Ammo"
+
+[node name="ammo_model" parent="." instance=ExtResource("4_model")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_e")
