@@ -6,7 +6,7 @@ var damage: int = 0
 
 func _on_body_entered(body):
 	if body.is_in_group("Target") && body.has_method("Hit_Successful"):
-		body.Hit_Successful(damage)
+		body.Hit_Successful(damage, Vector3.ZERO, global_position)
 		emit_signal("Hit_Successfull")
 
 	queue_free()

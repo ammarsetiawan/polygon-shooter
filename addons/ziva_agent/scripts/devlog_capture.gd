@@ -58,11 +58,11 @@ func _start_encoder(ffmpeg: String, out: String) -> bool:
 		"-vf", "scale='min(1280,iw)':-2", "-c:v", "libopenh264", "-rc_mode", "bitrate", "-b:v", "4M",
 		"-pix_fmt", "yuv420p", "-g", str(_fps * 2),
 		"-f", "segment", "-segment_time", str(SEGMENT_SECONDS), "-reset_timestamps", "1", "-segment_format", "mp4",
-		"-segment_format_options", "movflags=+frag_keyframe+empty_moov+default_base_moof", out.path_join("seg_%04d.mp4")])
+		"-segment_format_options", "movflags=+frag_keyframe+empty_moov+default_base_moof", out.replace("%", "%%").path_join("seg_%04d.mp4")])
 	# ffmpeg writes its own diagnostics next to the segments so an encoder failure is never silent.
-	# FFREPORT splits on ':' and treats a backslash as an escape, so a Windows path goes in with
-	# forward slashes and its drive letter's colon escaped.
-	OS.set_environment("FFREPORT", "file=%s:level=24" % out.path_join("ffmpeg.log").replace("\\", "/").replace(":", "\\:"))
+	# Both FFmpeg filenames expand '%'; escape only the directory so seg_%04d stays a template.
+	# FFREPORT also splits on ':' and treats a backslash as an escape.
+	OS.set_environment("FFREPORT", "file=%s:level=24" % out.path_join("ffmpeg.log").replace("%", "%%").replace("\\", "/").replace(":", "\\:"))
 	var p := OS.execute_with_pipe(ffmpeg, args)
 	# Unset so the game's own child processes do not write reports here.
 	OS.unset_environment("FFREPORT")

@@ -101,10 +101,15 @@ func Hit_Scan_damage(Collider, Direction, Position, _damage):
 
 func Load_Decal(_pos,_normal):
 	if Display_Debug_Decal:
+		var normal: Vector3 = Vector3.ZERO
+		if _normal is Vector3:
+			normal = _normal
+		elif _normal != null:
+			normal = Vector3(_normal)
 		var rd = Debug_Bullet.instantiate()
 		var world = get_tree().get_root()
 		world.add_child(rd)
-		rd.global_translate(_pos+(_normal*.01))
+		rd.global_translate(_pos + (normal * 0.01))
 		
 func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
 	var _Point = Collision_Data[1]
@@ -134,7 +139,7 @@ func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
 
 func _on_body_entered(body, _proj, _norm):
 	if body.is_in_group("Target") && body.has_method("Hit_Successful"):
-		body.Hit_Successful(damage)
+		body.Hit_Successful(damage, Vector3.ZERO, _proj.global_position)
 		Hit_Successfull.emit()
 
 	Load_Decal(_proj.get_position(),_norm)

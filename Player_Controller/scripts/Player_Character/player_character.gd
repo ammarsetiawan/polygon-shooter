@@ -405,8 +405,23 @@ func _update_name_label_text() -> void:
 ## Dipanggil oleh peluru/proyektil di client penembak saat mengenai player ini.
 ## HP diubah pada salinan node ini (client penembak) lalu disinkronkan, sehingga
 ## semua client (termasuk korban) melihat HP yang sama.
+## Ambang batas tinggi (lokal terhadap player) yang dianggap "kepala".
+## Di atas nilai ini dihitung sebagai headshot (damage 2x).
+const HEADSHOT_HEIGHT: float = 1.2
+
 func Hit_Successful(damage, _direction: Vector3 = Vector3.ZERO, _position: Vector3 = Vector3.ZERO) -> void:
-	health -= damage
+	var dmg: float = 0.0
+	if damage != null:
+		dmg = float(damage)
+	var final_damage: float = dmg
+	# Variasi damage berdasarkan lokasi hit: kepala = 2x, badan = normal.
+	if _position != Vector3.ZERO and _position != null:
+		var local_pos: Vector3 = to_local(_position)
+		if local_pos.y >= HEADSHOT_HEIGHT:
+			final_damage = dmg * 2.0
+			if _is_local:
+				print("HEADSHOT! damage x2")
+	health -= final_damage
 	GDSync.sync_var(self, "health")
 
 ## Menyembunyikan pemain di client ini (dipanggil dari setter "health").
